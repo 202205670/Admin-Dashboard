@@ -1,0 +1,66 @@
+/* Container for the table */
+.table-container {
+  padding-left: 20px;
+  margin-right: 18px;
+
+}
+
+/* Table styles */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  overflow: hidden; /* Keep the rounded corners effect */
+ border-radius: 10px;
+  
+ 
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table th {
+  background-color: #f4f4f4;
+}
+
+.custom-table td {
+  background-color: #fff;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color:#192e49; /* Add a blue color to the FontAwesome edit icon */
+  font-size: 18px; /* Adjust the icon size */
+  
+}
+
+/* Pagination styles */
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: none;
+  background-color: gray;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.pagination button.active {
+  background-color: #192e49;
+  color: white;
+}
+
+.pagination button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}

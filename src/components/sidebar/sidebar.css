@@ -1,0 +1,109 @@
+.sidebar {
+  flex: 1;
+  height: 100vh; /* Set height to 100vh to fit screen height */
+  background-color: #F7F9FA;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-right: 1px solid #E0E0E0;
+  width: 15%;
+  position: fixed; /* Fixed position to keep sidebar in place when scrolling */
+  top: 0;
+  left: 0;
+}
+
+.sidebarWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%; /* Update to 100% to fit container */
+  padding-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex-direction: row;
+}
+
+.profileIcon {
+  background-color: #ddd;
+  padding: 10px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  font-size: 24px;
+  margin-top: 15px;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileName {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.profileEmail {
+  font-size: 12px;
+  color: #888;
+}
+
+.sidebarMenu {
+  width: 100%; /* Ensure it fits the width of the sidebar */
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Full width for the list */
+}
+
+.sidebarListItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 2px;
+}
+
+.sidebarListItem.active {
+  background-color: black;
+  color: white;
+}
+
+.sidebarListItem span {
+  margin-left: 10px;
+}
+
+.sidebarIcon {
+  font-size: 20px;
+  color: inherit;
+}
+
+.sidebarListItem:hover {
+  background-color: black;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}

@@ -1,0 +1,119 @@
+.form-container {
+    padding-left: 10px;
+    padding-top: 1px;
+    padding-right: 2px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    margin-top: 100px;
+    margin-left: 25px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    
+
+  }
+  
+  .form-title {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: bold;
+    padding-left: 15px;
+
+  }
+  
+  .form {
+    width: 100%;
+    max-width: 1100px;
+    padding: 10px;
+    padding-left: 5px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    margin-top: 0px;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .form-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+  }
+  .wide-input {
+    width: 3000px; 
+    
+  }
+  .status-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+ 
+  }
+  
+  .status-label {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    gap: 8px;
+  }
+  
+  .checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    gap: 8px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+    margin-right: 20px;
+    padding-right: 20px;
+  }
+  
+  .form-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin-right: 13px;
+    width: 130px;
+    margin-bottom: 10px;
+  }
+  
+  .cancel-btn {
+    background-color: white;
+    color: black;
+    border: 1px #1F2937 solid;
+  }
+  
+  .create-btn {
+    background: #1F2937;
+    color: white;
+  }
+  

@@ -1,0 +1,79 @@
+.branches-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 58px; 
+    margin-top: 30px; 
+    margin-left: 20px; 
+  }
+  
+  .branch-card {
+    background-color: #ffffff; 
+    border: 1px solid #ddd; 
+    border-radius: 12px; 
+    padding: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    width: 280px; 
+    display: flex;
+    flex-direction: column; /* Change to column for vertical alignment */
+    justify-content: space-between; 
+    align-items: flex-start; /* Align items to the start */
+    transition: transform 0.2s; 
+  }
+  
+  .branch-card:hover {
+    transform: translateY(-5px); 
+  }
+  
+  .branch-info {
+    flex-grow: 1; 
+  }
+  
+  .branch-info h3 {
+    font-size: 1.2em; 
+    margin: 0 0 5px; 
+    color: #333; 
+  }
+  
+  .address-section {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .address-title {
+    margin-left: 8px; 
+    font-weight: bold; 
+    color: #333; 
+    margin-right: 5px; 
+    margin-top: 0px;
+  }
+  
+  .branch-info p {
+
+    font-size: 0.9em; 
+    color: #666; 
+  }
+  
+  .address-icon {
+    color: #192e49;
+    font-size: 25px;
+  }
+  
+  .edit-icon-Branch {
+    cursor: pointer;
+    color: #192e49; 
+    font-size: 20px; 
+    margin-top: 10px; 
+    margin-left: 130px;
+    background-color: #ddd;
+    padding: 5px;
+    border-radius: 10px;
+    width: 10%;
+    padding-left: 10px;
+  
+
+  }
+  
+  .edit-icon-Branch:hover {
+    color: #0056b3; 
+  }
+  
