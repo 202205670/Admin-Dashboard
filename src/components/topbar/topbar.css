@@ -28,13 +28,13 @@
 
 .logo-image {
   height: 40px; /* Increased size for better visibility */
-  width: 40px; /* Set width for the rounded effect */
+  width: 100px; /* Set width for the rounded effect */
   border-radius: 50%; /* Makes the image round */
   margin-right: 10px;
 }
 
 .logo-text {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   color: black /* Adjust to match your gold color */
 }

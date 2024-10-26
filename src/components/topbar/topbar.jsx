@@ -1,6 +1,6 @@
 import React from 'react';
 import "./topbar.css";
-import GTLS_LOGO from './GTlS_LOGO.jpg'; // Adjust the path based on your project structure
+import GTLS_LOGO from './.GTlS_LOGO.jpg'; // Adjust the path based on your project structure
 
 const LogoWidget = () => {
   return (
