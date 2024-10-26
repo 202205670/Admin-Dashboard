@@ -1,40 +1,40 @@
 /* TopBar Styles */
 .topbar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: #ffffff;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .topbar-container {
-    display: flex;
-    justify-content: center;  /* Centering the logo and text */
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-image {
-    height: 30px;
-    margin-right: 10px;
-    
-  }
-  
-  .logo-text {
-    font-size: 18px;
-    font-weight: bold;
-    color: #f0b429; /* Adjust to match your gold color */
-  }
-  
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Aligns items to the left */
+}
+
+.logo-image {
+  height: 40px; /* Increased size for better visibility */
+  width: 40px; /* Set width for the rounded effect */
+  border-radius: 50%; /* Makes the image round */
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: black /* Adjust to match your gold color */
+}

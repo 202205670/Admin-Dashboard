@@ -26,7 +26,12 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
 
   // Generate page numbers for pagination
   const totalPages = Math.ceil(data.length / recordsPerPage);
-  const pageNumbers = [...Array(totalPages).keys()].map(n => n + 1);
+  const pageNumbers = [...Array(totalPages).keys()].map((n) => n + 1);
+
+  // Helper function to get column label and key
+  const getColumnLabel = (column) =>
+    typeof column === 'string' ? column.charAt(0).toUpperCase() + column.slice(1) : column.label;
+  const getColumnKey = (column) => (typeof column === 'string' ? column : column.key);
 
   return (
     <div className="table-container">
@@ -40,7 +45,7 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
               </th>
             )}
             {columns.map((column, index) => (
-              <th key={index}>{column.charAt(0).toUpperCase() + column.slice(1)}</th>
+              <th key={index}>{getColumnLabel(column)}</th>
             ))}
             <th>Edit</th>
           </tr>
@@ -56,7 +61,7 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
                   </td>
                 )}
                 {columns.map((column, colIndex) => (
-                  <td key={colIndex}>{row[column]}</td>
+                  <td key={colIndex}>{row[getColumnKey(column)]}</td>
                 ))}
                 <td>
                   <button onClick={() => handleEdit(row.id)}>

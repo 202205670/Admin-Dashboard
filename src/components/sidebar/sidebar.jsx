@@ -30,8 +30,9 @@ export default function Sidebar() {
             <h3 className="profileName">Younes</h3>
             <span className="profileEmail">Younes@gtls.com.au</span>
           </div>
-          <div className="profileDivider"></div> {/* This is for the horizontal line */}
         </div>
+        <div className="profileDivider"></div> {/* Divider line after profile info */}
+        
         <div className="sidebarMenu">
           <ul className="sidebarList">
             <Link to="/" className="link" onClick={() => handlePageChange("/")}>
