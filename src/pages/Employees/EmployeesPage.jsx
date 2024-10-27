@@ -1,70 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import TableComponent from "../../components/Table/TableComponent"; // Assuming the TableComponent is inside components folder
-import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import employee icon
-import "./AddEmployee";
+import TableComponent from "../../components/Table/TableComponent";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import useStatusCount from "../../hooks/useStatusCount"; // Assuming this hook calculates active/inactive counts
 
-const EmployeesPage = () => {
+const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [branch, setBranch] = useState("");
-  const navigate = useNavigate();
-
-  // Example employee data, replace this with actual data from props or API call
-  const employees = [
+  const [status, setStatus] = useState("");
   
-    { id: 1, name: "John Doe", email: "john@example.com", branch: "SYDNEY", address: "123 Main St" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", branch: "MELBOURNE", address: "456 Oak St" },
-    { id: 3, name: "Emily Davis", email: "emily@example.com", branch: "BRISBANE", address: "789 Pine St" },
-    { id: 4, name: "Michael Brown", email: "michael@example.com", branch: "SYDNEY", address: "101 Elm St" },
-    { id: 5, name: "Sarah Johnson", email: "sarah@example.com", branch: "MELBOURNE", address: "202 Maple St" },
-    { id: 1, name: "John Doe", email: "john@example.com", branch: "SYDNEY", address: "123 Main St" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", branch: "MELBOURNE", address: "456 Oak St" },
-    { id: 3, name: "Emily Davis", email: "emily@example.com", branch: "BRISBANE", address: "789 Pine St" },
-    { id: 4, name: "Michael Brown", email: "michael@example.com", branch: "SYDNEY", address: "101 Elm St" },
-    { id: 5, name: "Sarah Johnson", email: "sarah@example.com", branch: "MELBOURNE", address: "202 Maple St" },
-    { id: 1, name: "John Doe", email: "john@example.com", branch: "SYDNEY", address: "123 Main St" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", branch: "MELBOURNE", address: "456 Oak St" },
-    { id: 3, name: "Emily Davis", email: "emily@example.com", branch: "BRISBANE", address: "789 Pine St" },
-    { id: 4, name: "Michael Brown", email: "michael@example.com", branch: "SYDNEY", address: "101 Elm St" },
-    { id: 5, name: "Sarah Johnson", email: "sarah@example.com", branch: "MELBOURNE", address: "202 Maple St" },
+  const employeesData = [
+    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
+    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
+    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
+    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
+    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
+    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
+    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
+    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
+    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
+    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
+    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
+    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
+  
   ];
 
-  // Filter logic (update based on your actual filtering needs)
-  const filteredEmployees = employees.filter((employee) => {
-    return (
-      employee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      employee.branch.toLowerCase().includes(branch.toLowerCase())
-    );
-  });
+  const { activeCount, inactiveCount } = useStatusCount(employeesData);
 
-  const handleSearch = (value) => {
-    setSearchTerm(value);
-  };
+  useEffect(() => {
+    if (typeof updateEmployeeCount === "function") {
+      updateEmployeeCount({ active: activeCount, inactive: inactiveCount });
+    }
+  }, [activeCount, inactiveCount, updateEmployeeCount]);
 
-  const handleBranchChange = (value) => {
-    setBranch(value);
-  };
-  
-
-  const columns = ["name", "email", "branch", "address"];
+  if (showRecords) return null;
 
   return (
     <PageWrapper
       title="Employees"
-      filters={["search", "branch"]}
-      placeholders={{ search: "Search by Name", branch: "Branch" }}
+      filters={["search", "branch", "status"]}
+      placeholders={{
+        search: "Search by Name",
+        branch: "Branch",
+        status: "Status",
+      }}
       addButtonLabel="Add Employee"
       onAddClick={() => navigate("/add-employee")}
       showAddButton={true}
-      onSearch={handleSearch}
-      onBranchChange={handleBranchChange}
+      onSearch={(value) => setSearchTerm(value)}
+      onBranchChange={(value) => setBranch(value)}
+      onStatusChange={(value) => setStatus(value)}
+      statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={columns}
-        data={filteredEmployees}
+        columns={["name", "email", "phone", "branch", "status", "address"]}
+        data={employeesData.filter(employee => 
+          employee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          (branch === "" || employee.branch === branch) &&
+          (status === "" || employee.status === status)
+        )}
         editPageUrl="/edit-employee"
-        pageSpecificIcons={faUser} // Employee icon before each record
+        pageSpecificIcons={faUser}
       />
     </PageWrapper>
   );
