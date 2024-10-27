@@ -12,6 +12,55 @@
   position: fixed; /* Fixed position to keep sidebar in place when scrolling */
   top: 0;
   left: 0;
+  transition: width 0.3s ease; /* Smooth transition for width change */
+}
+
+/* Media Query for Tablets and Smaller Devices */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 40%; /* Increase width for tablets */
+    height: auto; /* Allow height to adjust */
+  }
+}
+
+/* Media Query for Large Phones */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60%; /* Adjust width for larger phones */
+    height: auto; /* Allow height to adjust */
+    padding: 5px; /* Reduce padding */
+  }
+}
+
+/* Media Query for Phones */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%; /* Full width for phones */
+    height: auto; /* Allow height to adjust */
+    position: relative; /* Change to relative to stack below content */
+    border-right: none; /* Remove right border for a cleaner look */
+    padding: 5px; /* Further reduce padding for phones */
+  }
+
+  .profileSection {
+    flex-direction: column; /* Stack profile section vertically */
+    align-items: flex-start; /* Align items to start */
+    margin: 10px 0; /* Adjust margins */
+    width: 100%; /* Full width */
+  }
+
+  .profileIcon {
+    margin-bottom: 10px; /* Space below icon */
+  }
+
+  .profileInfo {
+    align-items: flex-start; /* Align text to start */
+  }
+
+  .sidebarListItem {
+    font-size: 14px; /* Smaller font size for better fit */
+    padding: 8px; /* Adjust padding for smaller devices */
+  }
 }
 
 .sidebarWrapper {
@@ -31,7 +80,6 @@
   margin-top: 20px;
   margin-bottom: 15px;
   flex-direction: row;
-
 }
 
 .profileIcon {
@@ -41,8 +89,6 @@
   margin-bottom: 5px;
   font-size: 24px;
   margin-top: 15px;
-
-
 }
 
 .profileInfo {
@@ -50,8 +96,7 @@
   flex-direction: column;
   align-items: center;
   margin-right: 30px;
- padding: 0px;
- 
+  padding: 0px;
 }
 
 .profileName {
@@ -63,7 +108,6 @@
 .profileEmail {
   font-size: 12px;
   color: #888;
- 
 }
 
 .sidebarMenu {
@@ -91,6 +135,8 @@
 }
 
 .sidebarListItem.active {
+  margin-top: 5px;
+  height: 20px;
   background-color: black;
   color: white;
 }
@@ -107,6 +153,8 @@
 .sidebarListItem:hover {
   background-color: black;
   color: white;
+
+  
 }
 
 .link {
@@ -114,9 +162,9 @@
   color: inherit;
   width: 100%;
 }
+
 .profileDivider {
   width: 100%; /* Full width */
   height: 2px; /* Height of the line */
-  background-color:black /* Color of the line */
-
+  background-color: black; /* Color of the line */
 }
