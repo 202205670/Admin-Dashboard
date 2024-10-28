@@ -16,7 +16,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
     { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
     { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
     { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
-    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
+    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Active", address: "456 Oak St" },
     { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
     { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
     { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },

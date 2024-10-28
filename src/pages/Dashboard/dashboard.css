@@ -1,46 +1,74 @@
 .dashboard-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
-    justify-content: space-around; /* Evenly space out boxes */
-    gap: 20px; /* Space between the boxes */
-    margin-top: 20px;
-    margin-left: 20px;
-  }
-  
-  .dashboard-box {
-    flex: 1 1 200px; /* Flexible width with minimum width for responsiveness */
-    padding: 20px;
-    background-color: #f7f9fa; /* Light background */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.3s ease;
-  }
-  
-  .dashboard-box:hover {
-    transform: translateY(-5px); /* Subtle lift effect on hover */
-  }
-  
-  .dashboard-box h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .dashboard-box p {
-    font-size: 16px;
-    color: #555;
-  }
-  .dashboard-boxx {
-    flex: 1 1 200px; /* Flexible width with minimum width for responsiveness */
-    padding: 20px;
-    background-color: #f7f9fa; /* Light background */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 8px; /* Rounded corners */
-    text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 10px; /* Adjusted for better spacing */
+  margin-top: -20px;
 
-  }
+}
+
+.dashboard-box {
+  flex: 1;
+  padding-left: 10px;
+
+  background: linear-gradient(90deg, #3C4957 0%, #8299B3 100%);
+  color: #f0f0f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  height: 150px; /* Increased height for better layout */
+  display: flex; /* For horizontal alignment */
+ 
+
+  display:inline-table;
+  
+}
+
+.dashboard-box:hover {
+  transform: translateY(-15px);
+}
+
+.dashboard-box h2 {
+  font-size: 24px; /* Slightly smaller for balance */
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px; /* Reduced margin for a cleaner look */
+
+}
+
+.dashboard-status {
+  display: flex; /* For active/inactive status alignment */
+  flex-direction: column; /* Stack them vertically */
+}
+
+.dashboard-status p {
+  margin: 0; /* Remove default margin for consistent spacing */
+  font-size: 16px; /* Ensure text is legible */
+
+ 
+}
+
+.status-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.active-dot {
+  background-color: #EDCB54;
+}
+
+.inactive-dot {
+  background-color: #FFECAB;
+}
+
+.circular-chart {
+  width: 80px; /* Adjusted for visual balance */
+  height: 80px; /* Adjusted for visual balance */
+  margin-left: 15px; /* Space out from the text */
+
+}

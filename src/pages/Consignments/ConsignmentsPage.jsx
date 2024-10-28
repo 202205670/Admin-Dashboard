@@ -12,11 +12,11 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
   const [consignmentsData, setConsignmentsData] = useState([
     // Sample data - replace with actual data source
     { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", timeIn: "08:00", timeOut: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Not Active", type: "Type B" },
+    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Active", type: "Type B" },
     { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", timeIn: "08:00", timeOut: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Not Active", type: "Type B" },
+    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Active", type: "Type B" },
     { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", timeIn: "08:00", timeOut: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Not Active", type: "Type B" },
+    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Active", type: "Type B" },
     { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", timeIn: "08:00", timeOut: "10:00", priority: "1", status: "Active", type: "Type A" },
     { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", timeIn: "09:00", timeOut: "11:00", priority: "2", status: "Not Active", type: "Type B" },
     { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", timeIn: "08:00", timeOut: "10:00", priority: "1", status: "Active", type: "Type A" },

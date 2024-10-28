@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import "./dashboard.css";
 import DriversPage from "../Drivers/DriverList";
@@ -7,76 +8,124 @@ import ConsignmentsPage from "../Consignments/ConsignmentsPage";
 import RunsheetPage from "../Runsheets/RunsheetsPage";
 import VehiclePage from "../Vehicles/Vehicle";
 
+// Define active and inactive colors
+const COLORS = ["#EDCB54", "#FFECAB"];
 
 const Dashboard = () => {
   const [driverCounts, setDriverCounts] = useState({ active: 0, inactive: 0 });
   const [employeeCounts, setEmployeeCounts] = useState({ active: 0, inactive: 0 });
   const [consignmentCounts, setConsignmentCounts] = useState({ active: 0, inactive: 0 });
   const [runsheetCounts, setRunsheetCounts] = useState({ active: 0, inactive: 0 });
-  const [vehicleCount, setVehicleCount] = useState({ active: 0, inactive: 0 });
+  const [vehicleCounts, setVehicleCounts] = useState({ active: 0, inactive: 0 });
 
-  const updateDriverCount = (counts) => {
-    setDriverCounts(counts);
-  };
-
-  const updateEmployeeCount = (counts) => {
-    setEmployeeCounts(counts);
-  };
-
-  const updateConsignmentCount = (counts) => {
-    setConsignmentCounts(counts);
-  };
-
-  const updateRunsheetCount = (counts) => {
-    setRunsheetCounts(counts);
-  };
-
-  const updateVehicleCount = ({ active, inactive }) => {
-    setVehicleCount({ active, inactive });
-  };
+  const generateChartData = (active, inactive) => [
+    { name: "Active", value: active },
+    { name: "Not Active", value: inactive },
+  ];
 
   return (
     <PageWrapper title="Dashboard" showAddButton={false}>
       <div className="dashboard-container">
+        
+        {/* Driver Status */}
         <div className="dashboard-box">
-          <h2>Driver Status Counts</h2>
-          <p>Active: {driverCounts.active}</p>
-          <p>Not Active: {driverCounts.inactive}</p>
+          <h2>Drivers</h2>
+          <p> Active: <span className="status-dot active-dot"></span>{driverCounts.active}</p>
+          <p> Not Active: <span className="status-dot inactive-dot"></span> {driverCounts.inactive}</p>
+          <PieChart width={200} height={150}>
+            <Pie
+              data={generateChartData(driverCounts.active, driverCounts.inactive)}
+            
+            >
+              {generateChartData(driverCounts.active, driverCounts.inactive).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        
         </div>
-        {/* DriversPage is included here to calculate counts */}
-        <DriversPage updateDriverCount={updateDriverCount} showRecords={true} />
+        <DriversPage updateDriverCount={setDriverCounts} showRecords={true} />
 
+        {/* Employee Status */}
         <div className="dashboard-box">
-          <h2>Employee Status Counts</h2>
-          <p>Active: {employeeCounts.active}</p>
-          <p>Not Active: {employeeCounts.inactive}</p>
+          <h2>Employees</h2>
+          <p> Active: <span className="status-dot active-dot"></span>{employeeCounts.active}</p>
+          <p> Not Active: <span className="status-dot inactive-dot"></span> {employeeCounts.inactive}</p>
+          <PieChart width={200} height={150}>
+            <Pie
+              data={generateChartData(employeeCounts.active, employeeCounts.inactive)}
+           
+            >
+              {generateChartData(employeeCounts.active, employeeCounts.inactive).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+          
         </div>
-        {/* EmployeesPage is included here to calculate counts */}
-        <EmployeesPage updateEmployeeCount={updateEmployeeCount} showRecords={true} />
+        <EmployeesPage updateEmployeeCount={setEmployeeCounts} showRecords={true} />
 
+        {/* Consignment Status */}
         <div className="dashboard-box">
-          <h2>Consignment Status Counts</h2>
-          <p>Active: {consignmentCounts.active}</p>
-          <p>Not Active: {consignmentCounts.inactive}</p>
+          <h2>Consignments</h2>
+          <p>Active: <span className="status-dot active-dot"></span> {consignmentCounts.active}</p>
+          <p>Not Active: <span className="status-dot inactive-dot"></span> {consignmentCounts.inactive}</p>
+          <PieChart width={200} height={150}>
+            <Pie
+              data={generateChartData(consignmentCounts.active, consignmentCounts.inactive)}
+            
+            >
+              {generateChartData(consignmentCounts.active, consignmentCounts.inactive).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        
         </div>
-        <ConsignmentsPage updateConsignmentCount={updateConsignmentCount} showRecords={true} />
+        <ConsignmentsPage updateConsignmentCount={setConsignmentCounts} showRecords={true} />
 
+        {/* Runsheet Status */}
         <div className="dashboard-box">
-          <h2>Runsheet Status Counts</h2>
-          <p>Open: {runsheetCounts.active}</p>
-          <p>Closed: {runsheetCounts.inactive}</p>
+          <h2>Runsheets</h2>
+          <p> Open: <span className="status-dot active-dot"></span>{runsheetCounts.active}</p>
+          <p> Closed: <span className="status-dot inactive-dot"></span>  {runsheetCounts.inactive}</p>
+          <PieChart width={200} height={150}>
+            <Pie
+              data={generateChartData(runsheetCounts.active, runsheetCounts.inactive)}
+         
+            >
+              {generateChartData(runsheetCounts.active, runsheetCounts.inactive).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        
         </div>
-        <RunsheetPage updateRunsheetCount={updateRunsheetCount} showRecords={true} />
+        <RunsheetPage updateRunsheetCount={setRunsheetCounts} showRecords={true} />
 
-        <div className="dashboard-boxx">
-          <h2>Vehicle Status Counts</h2>
-          <p>Active Vehicles: {vehicleCount.active}</p>
-          <p>Inactive Vehicles: {vehicleCount.inactive}</p>
+        {/* Vehicle Status */}
+        <div className="dashboard-box">
+          <h2>Vehicle</h2>
+          <p>Active: <span className="status-dot active-dot"></span>{vehicleCounts.active}</p>
+          <p>Not Active: <span className="status-dot inactive-dot"></span> {vehicleCounts.inactive}</p>
+          <PieChart width={200} height={150}>
+            <Pie
+              data={generateChartData(vehicleCounts.active, vehicleCounts.inactive)}
+           
+            >
+              {generateChartData(vehicleCounts.active, vehicleCounts.inactive).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        
         </div>
-        <VehiclePage 
-        updateVehicleCount={updateVehicleCount} 
-        showRecords={true}
-      />
+        <VehiclePage updateVehicleCount={setVehicleCounts} showRecords={true} />
       </div>
     </PageWrapper>
   );
