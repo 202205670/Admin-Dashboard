@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons'; // Import the edit icon
-import './TableComponent.css'; // Ensure this file exists and is styled correctly
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import './TableComponent.css';
 
 const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,14 +38,9 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
       <table className="custom-table">
         <thead>
           <tr>
-            {/* Add icons specific to each page */}
-            {pageSpecificIcons && (
-              <th>
-                <FontAwesomeIcon icon={pageSpecificIcons} />
-              </th>
-            )}
-            {columns.map((column, index) => (
-              <th key={index}>{getColumnLabel(column)}</th>
+            <th>{getColumnLabel(columns[0])}</th> {/* Combined icon and first column header */}
+            {columns.slice(1).map((column, index) => (
+              <th key={index + 1}>{getColumnLabel(column)}</th>
             ))}
             <th>Edit</th>
           </tr>
@@ -54,14 +49,15 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
           {currentData.length > 0 ? (
             currentData.map((row, index) => (
               <tr key={index}>
-                {/* If icons specific to page exist, render them in the first cell */}
-                {pageSpecificIcons && (
-                  <td>
-                    <FontAwesomeIcon icon={pageSpecificIcons} />
-                  </td>
-                )}
-                {columns.map((column, colIndex) => (
-                  <td key={colIndex}>{row[getColumnKey(column)]}</td>
+                <td className="icon-cell">
+                  {/* Render the page-specific icon alongside the first column data */}
+                  {pageSpecificIcons && (
+                    <FontAwesomeIcon icon={pageSpecificIcons} className="row-icon" />
+                  )}
+                  {row[getColumnKey(columns[0])]} {/* First column data */}
+                </td>
+                {columns.slice(1).map((column, colIndex) => (
+                  <td key={colIndex + 1}>{row[getColumnKey(column)]}</td>
                 ))}
                 <td>
                   <button onClick={() => handleEdit(row.id)}>
@@ -72,7 +68,7 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length + (pageSpecificIcons ? 2 : 1)} style={{ textAlign: 'center' }}>
+              <td colSpan={columns.length + 1} style={{ textAlign: 'center' }}>
                 No data available
               </td>
             </tr>

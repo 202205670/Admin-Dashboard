@@ -64,11 +64,12 @@ const PageWrapper = ({
             <select
               value={branch}
               onChange={handleBranchChange} // Trigger branch handler on change
-              className="branchSelect"
+              className={`branchSelect ${branch ? "selected" : ""}`}
             >
-              <option value="" disabled>
+              <option value="" >
                 {placeholders.branch || "Branch"}
               </option>
+              
               <option value="Sydney">Sydney</option>
               <option value="Brisbane">Brisbane</option>
               <option value="Melbourne">Melbourne</option>
@@ -80,7 +81,7 @@ const PageWrapper = ({
             <select
               value={status}
               onChange={handleStatusChange} // Trigger status handler on change
-              className="statusSelect"
+              className={`statusSelect ${status ? "selected" : ""}`}
             >
               <option value="" disabled>
                 {placeholders.status || "Status"}

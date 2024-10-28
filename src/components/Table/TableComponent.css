@@ -1,19 +1,19 @@
 /* Container for the table */
 .table-container {
-  padding-left: 20px;
+  margin-left: 20px;
   margin-right: 18px;
-
+  max-height: 400px; /* Set a fixed height to make the table scrollable */
+  overflow-y: auto; /* Enables vertical scrolling within the container */
+  overflow-x: auto; /* Enables horizontal scrolling if needed on smaller screens */
+  border-radius: 10px; /* Matches the table's rounded corners */
 }
 
 /* Table styles */
 .custom-table {
   width: 100%;
   border-collapse: collapse;
-
+  border-radius: 10px;
   overflow: hidden; /* Keep the rounded corners effect */
- border-radius: 10px;
-  
- 
 }
 
 .custom-table th,
@@ -31,11 +31,25 @@
   background-color: #fff;
 }
 
+/* Table row hover effect */
+.custom-table tr:hover td {
+  background-color: #f1f1f1; /* Light gray on hover */
+}
+
+/* First column with icon and name */
+
+
+
+/* Icon styling */
+.row-icon {
+ padding-right: 15px;
+}
+
+/* Edit icon */
 .edit-icon {
   cursor: pointer;
-  color:#192e49; /* Add a blue color to the FontAwesome edit icon */
+  color: #192e49; /* Add a blue color to the FontAwesome edit icon */
   font-size: 18px; /* Adjust the icon size */
-  
 }
 
 /* Pagination styles */
@@ -53,6 +67,12 @@
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 30px;
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.pagination button:hover {
+  background-color: #333; /* Darken color on hover */
+  color: white;
 }
 
 .pagination button.active {
