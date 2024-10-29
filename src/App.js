@@ -21,6 +21,7 @@ import AddConsignment from "./pages/Consignments/AddConsignment";
 import EditConsignment from "./pages/Consignments/EditConsignment";
 
 import Runsheets from "./pages/Runsheets/RunsheetsPage";
+import RunsheetsDetails from "./pages/Runsheets/RunsheetsDetails";
 import AddRunsheet from "./pages/Runsheets/AddRunsheet";
 import EditRunsheet from "./pages/Runsheets/EditRunsheet";
 
