@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import TableComponent from "../../components/Table/TableComponent";
 import './AddForm.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const AddForm = ({
   title,
@@ -9,14 +10,13 @@ const AddForm = ({
   showStatusCheckbox,
   secondTitle,
   secondFields = [],
-  tableData,
-  tableColumns,
-  editPageUrl,
-  pageSpecificIcons,
   onSubmit,
   onCancel,
-  secondButtonLabel, // New prop for the second button label
-  onSecondButtonClick, // New prop for the second button click handler
+  consignments = [],
+  showTable = false,
+  onAssignConsignment,
+  onDeleteConsignment,
+  isAddRunsheetPage, // New prop for conditionally showing the Assign button
 }) => {
   const [formData, setFormData] = useState(
     fields.concat(secondFields).reduce((acc, field) => {
@@ -27,8 +27,27 @@ const AddForm = ({
     }, {})
   );
 
+  const [newConsignment, setNewConsignment] = useState({
+    consignmentNumber: '',
+    type: '',
+    priority: '',
+  });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleNewConsignmentChange = (e) => {
+    setNewConsignment({ ...newConsignment, [e.target.name]: e.target.value });
+  };
+
+  const handleAssign = () => {
+    if (newConsignment.consignmentNumber && newConsignment.type) {
+      onAssignConsignment(newConsignment);
+      setNewConsignment({ consignmentNumber: '', type: '', priority: '' }); // Reset after assigning
+    } else {
+      alert("Please fill in all fields.");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -50,10 +69,7 @@ const AddForm = ({
 
   return (
     <div className="form-container">
-      {/* Primary Title */}
       <h2 className="form-title">{title}</h2>
-
-      {/* Primary Boxes */}
       <form onSubmit={handleSubmit} className="form">
         <div className="form-grid">
           {fields.map((field, index) =>
@@ -94,7 +110,6 @@ const AddForm = ({
           )}
         </div>
 
-        {/* Optional Secondary Title and Boxes */}
         {secondTitle && (
           <>
             <h2 className="form-title">{secondTitle}</h2>
@@ -110,9 +125,9 @@ const AddForm = ({
                     {field.type === 'select' ? (
                       <select
                         name={field.name}
-                        value={formData[field.name]}
+                        value={newConsignment[field.name]}
                         className="form-input"
-                        onChange={handleChange}
+                        onChange={handleNewConsignmentChange}
                       >
                         <option value="" disabled>
                           Select {field.label}
@@ -127,9 +142,9 @@ const AddForm = ({
                       <input
                         type={field.type}
                         name={field.name}
-                        value={formData[field.name]}
+                        value={newConsignment[field.name]}
                         className="form-input"
-                        onChange={handleChange}
+                        onChange={handleNewConsignmentChange}
                       />
                     )}
                   </div>
@@ -139,7 +154,16 @@ const AddForm = ({
           </>
         )}
 
-        {/* Status Checkbox */}
+        {/* Conditionally render the Assign button based on isAddRunsheetPage */}
+        {isAddRunsheetPage && (
+          <div className="form-group">
+            <button type="button" className="form-btn assign-btn" onClick={handleAssign}>
+              Assign
+            </button>
+          </div>
+        )}
+
+        {/* Optional Status Checkbox */}
         {showStatusCheckbox && (
           <div className="status-container">
             <div className="status-label">Status</div>
@@ -160,16 +184,35 @@ const AddForm = ({
           </div>
         )}
 
-        {/* Table Section */}
-        {tableData && tableColumns && (
+        {/* Table Section for Assigned Consignments */}
+        {showTable && (
           <div className="table-section">
-            <h3 className="form-section-title">Current Entries</h3>
-            <TableComponent
-              columns={tableColumns}
-              data={tableData}
-              editPageUrl={editPageUrl}
-              pageSpecificIcons={pageSpecificIcons}
-            />
+            <table className="custom-table">
+              <thead>
+                <tr>
+                  <th>Consignment #</th>
+                  <th>Type</th>
+                  <th>Priority</th>
+                  <th>Actions</th> 
+                </tr>
+              </thead>
+              <tbody>
+                {consignments.map((consignment, index) => (
+                  <tr key={index}>
+                    <td>{consignment.consignmentNumber}</td>
+                    <td>{consignment.type}</td>
+                    <td>{consignment.priority}</td>
+                    <td>
+                      <FontAwesomeIcon 
+                        icon={faTrash} 
+                        className="delete-icon" 
+                        onClick={() => onDeleteConsignment(index)} // Call the delete function
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -181,11 +224,6 @@ const AddForm = ({
           <button type="submit" className="form-btn create-btn">
             Create
           </button>
-          {onSecondButtonClick && ( // Render the second button if the handler is provided
-            <button type="button" className="form-btn assign-btn" onClick={onSecondButtonClick}>
-              {secondButtonLabel}
-            </button>
-          )}
         </div>
       </form>
     </div>

@@ -116,7 +116,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       startTime: "08:00 AM",
       finishTime: "10:00 PM",
       restTime: "7:00 PM",
-      status: "Open",
+      status: "Closed",
       addedBy: "Bassam",
       branch: "Sydney",
     },

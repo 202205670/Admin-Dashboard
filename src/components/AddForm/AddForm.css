@@ -116,4 +116,19 @@
     background: #1F2937;
     color: white;
   }
-  
+  .assign-btn{
+    background: #1F2937;
+    color: white;
+    margin-left: 87%;
+    margin-bottom: 50%;
+
+  }
+  .table-section{
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 15px;
+    
+  }
+  .delete-icon{
+    color: red;
+  }

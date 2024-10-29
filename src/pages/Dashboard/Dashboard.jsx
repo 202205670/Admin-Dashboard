@@ -29,10 +29,12 @@ const Dashboard = () => {
         
         {/* Driver Status */}
         <div className="dashboard-box">
+          <div className="Informationpie">
           <h2>Drivers</h2>
           <p> Active: <span className="status-dot active-dot"></span>{driverCounts.active}</p>
           <p> Not Active: <span className="status-dot inactive-dot"></span> {driverCounts.inactive}</p>
-          <PieChart width={200} height={150}>
+          </div>
+          <PieChart width={160} height={150}>
             <Pie
               data={generateChartData(driverCounts.active, driverCounts.inactive)}
             
@@ -49,10 +51,12 @@ const Dashboard = () => {
 
         {/* Employee Status */}
         <div className="dashboard-box">
+          <div className="Informationpie">
           <h2>Employees</h2>
           <p> Active: <span className="status-dot active-dot"></span>{employeeCounts.active}</p>
           <p> Not Active: <span className="status-dot inactive-dot"></span> {employeeCounts.inactive}</p>
-          <PieChart width={200} height={150}>
+          </div>
+          <PieChart width={160} height={150}>
             <Pie
               data={generateChartData(employeeCounts.active, employeeCounts.inactive)}
            
@@ -69,10 +73,12 @@ const Dashboard = () => {
 
         {/* Consignment Status */}
         <div className="dashboard-box">
+         <div className="Informationpie">   
           <h2>Consignments</h2>
           <p>Active: <span className="status-dot active-dot"></span> {consignmentCounts.active}</p>
           <p>Not Active: <span className="status-dot inactive-dot"></span> {consignmentCounts.inactive}</p>
-          <PieChart width={200} height={150}>
+         </div> 
+          <PieChart width={160} height={150}>
             <Pie
               data={generateChartData(consignmentCounts.active, consignmentCounts.inactive)}
             
@@ -89,10 +95,12 @@ const Dashboard = () => {
 
         {/* Runsheet Status */}
         <div className="dashboard-box">
+        <div className="Informationpie"> 
           <h2>Runsheets</h2>
           <p> Open: <span className="status-dot active-dot"></span>{runsheetCounts.active}</p>
           <p> Closed: <span className="status-dot inactive-dot"></span>  {runsheetCounts.inactive}</p>
-          <PieChart width={200} height={150}>
+         </div> 
+          <PieChart width={160} height={150}>
             <Pie
               data={generateChartData(runsheetCounts.active, runsheetCounts.inactive)}
          
@@ -109,10 +117,12 @@ const Dashboard = () => {
 
         {/* Vehicle Status */}
         <div className="dashboard-box">
+        <div className="Informationpie">
           <h2>Vehicle</h2>
           <p>Active: <span className="status-dot active-dot"></span>{vehicleCounts.active}</p>
           <p>Not Active: <span className="status-dot inactive-dot"></span> {vehicleCounts.inactive}</p>
-          <PieChart width={200} height={150}>
+        </div>
+          <PieChart width={160} height={150}>
             <Pie
               data={generateChartData(vehicleCounts.active, vehicleCounts.inactive)}
            

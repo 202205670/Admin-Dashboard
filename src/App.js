@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout"; // Import layout
 
 import './App.css';
+import LoginPage from './pages/LoginPage/LoginPage';
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 
@@ -34,10 +35,11 @@ import EditVehicle from"./pages/Vehicles/EditVehicle";
 function App() {
   return (
     <Router>
-
-      <Layout>
-      
+ 
+      <Layout >  
+     
         <Routes>
+       {/* <Route path="/" element={<LoginPage />} /> */}
           <Route path="/" element={<Dashboard />} />
 
           <Route path="/drivers" element={<DriverList />} />
