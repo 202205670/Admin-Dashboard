@@ -35,7 +35,7 @@ export default function Sidebar() {
         
         <div className="sidebarMenu">
           <ul className="sidebarList">
-            <Link to="/" className="link" onClick={() => handlePageChange("/")}>
+            <Link to="dashboard" className="link" onClick={() => handlePageChange("/")}>
               <li
                 className={`sidebarListItem ${activePage === "/" ? "active" : ""}`}
               >

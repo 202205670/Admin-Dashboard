@@ -21,7 +21,7 @@ import AddConsignment from "./pages/Consignments/AddConsignment";
 import EditConsignment from "./pages/Consignments/EditConsignment";
 
 import Runsheets from "./pages/Runsheets/RunsheetsPage";
-import RunsheetsDetails from "./pages/Runsheets/RunsheetsDetails";
+import RunsheetDetailPage from "./pages/Runsheets/RunsheetDetailPage";
 import AddRunsheet from "./pages/Runsheets/AddRunsheet";
 import EditRunsheet from "./pages/Runsheets/EditRunsheet";
 
@@ -40,8 +40,8 @@ function App() {
       <Layout >  
      
         <Routes>
-       {/* <Route path="/" element={<LoginPage />} /> */}
-          <Route path="/" element={<Dashboard />} />
+       { <Route path="/" element={<LoginPage />} /> }
+          <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/add-driver" element={<AddDriver />} />
@@ -56,7 +56,10 @@ function App() {
           <Route path="/edit-consignment/:id" element={<EditConsignment/>} />
 
           <Route path="/runsheets" element={<Runsheets />} />
+          <Route path="/runsheetDetailPage/:id" element={<RunsheetDetailPage />} />
+
           <Route path="/add-runsheet" element={<AddRunsheet />} />
+          
           <Route path="/edit-runsheet/:id" element={<EditRunsheet/>} />
 
           <Route path="/branches" element={<Branches />} />

@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import './TableComponent.css';
 
-const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
+const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons, isRunsheetPage, onRowClick }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 10; // Pagination size
+  const recordsPerPage = 10;
   const navigate = useNavigate();
 
   // Calculate data for the current page
@@ -19,18 +19,14 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
     setCurrentPage(pageNumber);
   };
 
-  // Handle Edit Click
-  const handleEdit = (id) => {
-    navigate(`${editPageUrl}/${id}`);
-  };
-
   // Generate page numbers for pagination
   const totalPages = Math.ceil(data.length / recordsPerPage);
   const pageNumbers = [...Array(totalPages).keys()].map((n) => n + 1);
 
-  // Helper function to get column label and key
+  // Helper functions for column label and key
   const getColumnLabel = (column) =>
     typeof column === 'string' ? column.charAt(0).toUpperCase() + column.slice(1) : column.label;
+  
   const getColumnKey = (column) => (typeof column === 'string' ? column : column.key);
 
   return (
@@ -38,7 +34,7 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
       <table className="custom-table">
         <thead>
           <tr>
-            <th>{getColumnLabel(columns[0])}</th> {/* Combined icon and first column header */}
+            <th>{getColumnLabel(columns[0])}</th> {/* Icon + first column header */}
             {columns.slice(1).map((column, index) => (
               <th key={index + 1}>{getColumnLabel(column)}</th>
             ))}
@@ -48,19 +44,26 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons }) => {
         <tbody>
           {currentData.length > 0 ? (
             currentData.map((row, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                onClick={isRunsheetPage ? () => onRowClick(row.id) : undefined} // Row click event only on Runsheet page
+              >
                 <td className="icon-cell">
-                  {/* Render the page-specific icon alongside the first column data */}
                   {pageSpecificIcons && (
                     <FontAwesomeIcon icon={pageSpecificIcons} className="row-icon" />
                   )}
-                  {row[getColumnKey(columns[0])]} {/* First column data */}
+                  {row[getColumnKey(columns[0])] || 'N/A'} {/* Default value if undefined */}
                 </td>
                 {columns.slice(1).map((column, colIndex) => (
-                  <td key={colIndex + 1}>{row[getColumnKey(column)]}</td>
+                  <td key={colIndex + 1}>{row[getColumnKey(column)] || 'N/A'}</td> // Default value if undefined
                 ))}
                 <td>
-                  <button onClick={() => handleEdit(row.id)}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent row click when editing
+                      navigate(`${editPageUrl}/${row.id}`);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faEdit} className="edit-icon" />
                   </button>
                 </td>

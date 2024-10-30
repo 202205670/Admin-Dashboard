@@ -1,0 +1,125 @@
+/* RunsheetDetailPage.css */
+
+/* Wrapper for runsheet details */
+.runsheet-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    width: 95%;
+}
+
+/* Basic styling for each section of runsheet info */
+.runsheet-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    align-items: start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    font-size: 16px;
+    color: #333;
+    padding: 8px;
+}
+
+/* Style for checkboxes - aligns with table's left edge */
+.checkboxes {
+    display: flex;
+    flex-direction: row;
+ gap: 155px;
+    padding: 7px 0;
+    
+}
+
+/* Label and checkbox styling */
+.checkboxes label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.checkboxes input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Edit button styling */
+.edit-button {
+    background-color: #192e49;
+    color: white;
+    
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: auto;
+    white-space: nowrap;
+    width: 160px;
+    margin-right: 17px;
+    height: 35px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for recent activities table */
+.recent-activities {
+    margin-top: 20px;
+}
+
+.recent-activities h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+.cancel-button{
+    background-color: white;
+    color: black;
+    border: 1px #1F2937 solid;
+   
+    
+  
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left:650px;
+    white-space: nowrap;
+    width: 160px;
+    margin-right: 17px;
+    height: 35px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 1024px) {
+    .runsheet-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .runsheet-info {
+        grid-template-columns: 1fr;
+    }
+    .edit-button {
+        align-self: stretch;
+    }
+}

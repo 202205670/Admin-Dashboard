@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; 
-import useStatusCount from "../../hooks/useStatusCount"; // Import the status count hook if needed
 
 const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const navigate = useNavigate();
@@ -11,7 +10,6 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
   const [runsheetsData, setRunsheetsData] = useState([
-    // Sample data for runsheets - replace with actual data source
     {
       id: 1,
       runsheet: "12321",
@@ -26,188 +24,78 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
     },
     {
       id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
+      runsheet: "12322",
+      driver: "John Doe",
+      vehicle: "y456",
+      startTime: "09:00 AM",
+      finishTime: "06:00 PM",
+      restTime: "5:00 PM",
       status: "Closed",
-      addedBy: "Admin",
+      addedBy: "Ali",
       branch: "Melbourne",
     },
     {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
+      id: 3,
+      runsheet: "12323",
+      driver: "Sara Smith",
+      vehicle: "z789",
+      startTime: "07:00 AM",
+      finishTime: "05:00 PM",
+      restTime: "4:00 PM",
       status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
+      addedBy: "Maya",
+      branch: "Brisbane",
     },
     {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
+      id: 3,
+      runsheet: "12323",
+      driver: "Sara Smith",
+      vehicle: "z789",
+      startTime: "07:00 AM",
+      finishTime: "05:00 PM",
+      restTime: "4:00 PM",
       status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
+      addedBy: "Maya",
+      branch: "Brisbane",
     },
     {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
+      id: 3,
+      runsheet: "12323",
+      driver: "Sara Smith",
+      vehicle: "z789",
+      startTime: "07:00 AM",
+      finishTime: "05:00 PM",
+      restTime: "4:00 PM",
       status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
+      addedBy: "Maya",
+      branch: "Brisbane",
     },
     {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
-      status: "Closed",
-      addedBy: "Bassam",
-      branch: "Sydney",
-    },
-    {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
+      id: 3,
+      runsheet: "12323",
+      driver: "Sara Smith",
+      vehicle: "z789",
+      startTime: "07:00 AM",
+      finishTime: "05:00 PM",
+      restTime: "4:00 PM",
       status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
+      addedBy: "Maya",
+      branch: "Brisbane",
     },
     {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
+      id: 3,
+      runsheet: "12323",
+      driver: "Sara Smith",
+      vehicle: "z789",
+      startTime: "07:00 AM",
+      finishTime: "05:00 PM",
+      restTime: "4:00 PM",
       status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
+      addedBy: "Maya",
+      branch: "Brisbane",
     },
-    {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
-      status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
-    },
-    {
-      id: 2,
-      runsheet: "R002",
-      driver: "Driver B",
-      vehicle: "Vehicle B",
-      startTime: "09:00",
-      finishTime: "11:00",
-      restTime: "45 mins",
-      status: "Closed",
-      addedBy: "Admin",
-      branch: "Melbourne",
-    },
-    
   ]);
 
-  // Calculate active (open) and inactive (closed) counts
   const activeCount = runsheetsData.filter(item => item.status === "Open").length;
   const inactiveCount = runsheetsData.filter(item => item.status === "Closed").length;
 
@@ -217,10 +105,13 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
     }
   }, [activeCount, inactiveCount, updateRunsheetCount]);
 
-  // Return nothing if showRecords is false
   if (showRecords) return null;
 
-  // If showRecords is true, render the runsheet records and UI
+  // Handle row click to navigate to the detail page
+  const handleRowClick = (id) => {
+    navigate(`/runsheetDetailPage/${id}`);
+  };
+
   return (
     <PageWrapper
       title="Runsheets"
@@ -237,6 +128,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       onBranchChange={(value) => setBranch(value)}
       onStatusChange={(value) => setStatus(value)}
       statusOptions={["Open", "Closed"]}
+      isRunsheetPage={true}
     >
       <TableComponent
         columns={[
@@ -257,6 +149,8 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
         )}
         editPageUrl="/edit-runsheet"
         pageSpecificIcons={faFileExcel}
+        isRunsheetPage={true} 
+        onRowClick={handleRowClick}
       />
     </PageWrapper>
   );

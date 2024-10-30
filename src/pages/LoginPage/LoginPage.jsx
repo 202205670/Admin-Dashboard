@@ -1,8 +1,9 @@
-/*import React from 'react';
+  /*
+  import React from 'react';
 import './LoginPage.css';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import LoginImage from '../../assets/images/LoginImage.svg';
-import Logo from '../../assets/images/LogoImage.jpg';
+import Logo from '../../assets/images/1.jpg';
 
 const LoginPage = () => {
   return (
