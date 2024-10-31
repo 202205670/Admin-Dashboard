@@ -1,72 +1,77 @@
-
 .LoginPage {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(126.35deg, #373B3D 7.62%, #1A1E21 72.73%);
-  }
-  
-  .imgContainer {
-    flex: 1;
-    width: 50%;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .imgContainer img:first-child {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: 5%;
-  }
-  
-  .imgContainer img:last-child {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-  }
-  
-  .loginFormContainer {
-    flex: 1;
-    width: 50%;
-    display: flex;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(126.35deg, #373B3D 7.62%, #1A1E21 72.73%);
+}
+
+.imgContainer {
+  width: 50%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgContainer img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.imgContainer img:last-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+}
+
+.loginFormContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.footer {
+  width: 100%;
+  background-color: #d4af37;
+  color: black;
+  text-align: left;
+  padding-left: 150px;
+padding-top: 10px;
+padding-bottom: 10px;
+
+  font-size: 14px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .LoginPage {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  
-  .logo {
-    display: none;
-  }
-  
-  .logo img {
-    width: 200px;
     height: auto;
-    margin-bottom: 0.5rem;
   }
-  
-  
-  @media (max-width: 768px) {
-    .LoginPage {
-      flex-direction: column;
-    }
-  
-    .imgContainer {
-      display: none;
-    }
-  
-    .loginFormContainer {
-      width: 100%;
-      padding: 1.5rem;
-    }
-  
-    .logo {
-      display: block;
-      margin-bottom: 1.5rem;
-    }
+
+  .imgContainer {
+    width: 100%;
+    height: 40vh;
   }
-  
+
+  .loginFormContainer {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .footer {
+    position: static;
+  }
+}

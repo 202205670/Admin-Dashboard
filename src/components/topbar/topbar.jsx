@@ -8,7 +8,7 @@ const LogoWidget = () => {
       <div className="topbar-container">
         <div className="logo">
           <img src={GTLS_LOGO} alt="GTLS_LOGO" className="logo-image" />
-          <span className="logo-text">GOLD TIGER - DRIVER</span>
+          <span className="logo-text"><span style={{ color: '#d4af37' }}>GOLD</span>TIGER - DRIVER</span>
         </div>
       </div>
     </header>

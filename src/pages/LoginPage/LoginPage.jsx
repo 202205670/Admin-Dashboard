@@ -1,5 +1,4 @@
-  /*
-  import React from 'react';
+import React from 'react';
 import './LoginPage.css';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import LoginImage from '../../assets/images/LoginImage.svg';
@@ -14,13 +13,17 @@ const LoginPage = () => {
       </div>
       <div className="loginFormContainer">
         <div className="logo">
-          <img src={Logo} alt="Logo" />
+        
         </div>
         <LoginForm />
+      </div>
+      
+      {/* Footer added here */}
+      <div className="footer">
+        &copy; 2023 Gold Tiger Logistics Solutions
       </div>
     </div>
   );
 };
 
 export default LoginPage;
-*/

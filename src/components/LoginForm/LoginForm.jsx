@@ -1,15 +1,16 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+ import ReCAPTCHA from 'react-google-recaptcha'; // Commented for now
 import './LoginForm.css';
 import eyeOpen from '../../assets/images/eyeOpen.svg';
 import eyeClosed from '../../assets/images/eyeClosed.svg';
 
 const LoginForm = () => {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+   const [isVerified, setIsVerified] = useState(false); // Commented for now
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,8 +24,7 @@ const LoginForm = () => {
     } else {
       setError('');
       console.log('Form Submitted', formData);
-      // Navigate to dashboard on successful login
-      navigate('/dashboard');
+      navigate('/dashboard'); // Navigate to dashboard on form submit
     }
   };
 
@@ -32,13 +32,18 @@ const LoginForm = () => {
     setShowPassword(!showPassword);
   };
 
+  
+   const onReCAPTCHAChange = (value) => {
+   setIsVerified(!!value);
+   };
+
   return (
     <div className="LoginForm_login">
       <div className="loginFormContainer_login">
-        <h2>Login to Your Account</h2>
+        <h2 className="loginHeader_login">Log<span style={{ color: '#d4af37' }}>in</span> to your Account</h2>
         {error && <div className="error_login">{error}</div>}
         <form className="loginFormForm_login" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="label_login">Email</label>
           <input
             type="email"
             id="email"
@@ -46,9 +51,10 @@ const LoginForm = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
+            className="inputField_login"
             required
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="label_login">Password</label>
           <div className="inputContainer_login">
             <input
               type={showPassword ? 'text' : 'password'}
@@ -57,6 +63,7 @@ const LoginForm = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter your password"
+              className="inputField_login"
               required
             />
             <img
@@ -67,9 +74,21 @@ const LoginForm = () => {
             />
           </div>
           <div className="forgotPasswordContainer_login">
-            <a href="#" className="forgotPasswordLink_login">Forgot Password?</a>
+            <a href="#" className="forgotPasswordLink_login">Forgot your password?</a>
           </div>
-          <button type="submit">Login</button>
+      
+          <button type="submit" className="loginButton_login">
+            Sign In
+          </button>
+
+          <div className="recaptchaContainer_login">
+            { 
+            <ReCAPTCHA
+              sitekey="YOUR_SITE_KEY"  // Replace with your actual reCAPTCHA site key
+              onChange={onReCAPTCHAChange}
+            />
+            }
+          </div>
         </form>
       </div>
     </div>
