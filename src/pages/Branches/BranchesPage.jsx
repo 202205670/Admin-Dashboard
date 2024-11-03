@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import "./BranchesPage.css";
+import axiosInstance from '../../server/axios.instance'
 
 const BranchesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const [branchesData,setBranchesData] = useState([])
 
   const handleSearch = (value) => {
     setSearchTerm(value);
   };
 
-  // Example branches data (replace with your actual data)
-  const branchesData = [
-    { id: 1, name: 'Sydney', address: 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual.' },
-    { id: 2, name: 'Melbourne', address: 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual.' },
-    { id: 3, name: 'Brisbane', address: 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual.' },
-  ];
-
   // Filter branches based on the search term
   const filteredBranches = branchesData.filter(branch => 
-    branch.name.toLowerCase().includes(searchTerm.toLowerCase())
+    branch.BranchName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get("/branches")
+      setBranchesData(response.data)
+    }
+   
+    fetchData()
+  },[])
 
   return (
     <PageWrapper
@@ -38,16 +42,16 @@ const BranchesPage = () => {
     >
       <div className="branches-container">
         {filteredBranches.map((branch) => (
-          <div className="branch-card" key={branch.id}>
+          <div className="branch-card" key={branch.BranchID}>
             <div className="branch-info">
-              <h3>{branch.name}</h3>
+              <h3>{branch.BranchName}</h3>
               <div className="address-section">
                 <FontAwesomeIcon icon={faMapMarkerAlt} className="address-icon" />
                 <span className="address-title">Address:</span>
-                <p>{branch.address}</p>
+                <p>{branch.City}</p>
               </div>
             </div>
-            <div className="edit-icon-Branch" onClick={() => navigate(`/edit-branch/${branch.id}`)}>
+            <div className="edit-icon-Branch" onClick={() => navigate(`/edit-branch/${branch.BranchID}`)}>
               <FontAwesomeIcon icon={faEdit} />
             </div>
           </div>

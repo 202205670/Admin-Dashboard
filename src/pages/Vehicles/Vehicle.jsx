@@ -4,6 +4,7 @@ import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this is correctly imported
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
+import axiosInstance from '../../server/axios.instance'
 
 const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   const navigate = useNavigate();
@@ -12,28 +13,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   const [status, setStatus] = useState("");
   const [vehiclesData, setVehiclesData] = useState([
     // Sample data for vehicles - replace with actual data source
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
-    { id: 1, vehicle: "V001", plate: "ABC123", branch: "Sydney", status: "Active", vehicleType: "Truck" },
-    { id: 2, vehicle: "V002", plate: "XYZ789", branch: "Brisbane", status: "Not Active", vehicleType: "Trailer" },
+   
    
   ]);
 
@@ -45,6 +25,15 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       updateVehicleCount({ active: activeCount, inactive: inactiveCount });
     }
   }, [activeCount, inactiveCount, updateVehicleCount]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get("/vehicles")
+      setVehiclesData(response.data)
+    }
+   
+    fetchData()
+  },[])
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
@@ -64,12 +53,8 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["vehicle", "plate", "branch", "status", "vehicleType"]}
-        data={vehiclesData.filter(vehicle =>
-          vehicle.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          (branch === "" || vehicle.branch === branch) &&
-          (status === "" || vehicle.status === status)
-        )}
+        columns={["VehicleID", "PlateNb", "BranchID", "StatusId", "VehicleTypeID"]}
+        data={vehiclesData}
         editPageUrl="/edit-vehicle"
         pageSpecificIcons={faTruck}
       />

@@ -4,43 +4,13 @@ import { faTruck } from '@fortawesome/free-solid-svg-icons'; // Consignment icon
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this path is correct
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
+import axiosInstance from '../../server/axios.instance'
 
 const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("");
-  const [consignmentsData, setConsignmentsData] = useState([
-    // Sample data - replace with actual data source
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-    { id: 1, consig: "C001", customer: "Customer A", runsheet: "R001", source: "Source A", destination: "Destination A", time_In: "08:00", time_Out: "10:00", priority: "1", status: "Active", type: "Type A" },
-    { id: 2, consig: "C002", customer: "Customer B", runsheet: "R002", source: "Source B", destination: "Destination B", time_In: "09:00", time_Out: "11:00", priority: "2", status: "Not Active", type: "Type B" },
-   
-  ]);
+  const [consignmentsData, setConsignmentsData] = useState([]);
 
   // Calculate active and inactive counts
   const { activeCount, inactiveCount } = useStatusCount(consignmentsData);
@@ -50,6 +20,15 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
       updateConsignmentCount({ active: activeCount, inactive: inactiveCount });
     }
   }, [activeCount, inactiveCount, updateConsignmentCount]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get("/consignments")
+      setConsignmentsData(response.data)
+    }
+   
+    fetchData()
+  },[])
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
@@ -69,21 +48,18 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          "consig", // Updated to consig#
-          "customer",
-          "runsheet", // Updated to runsheet#
-          "source",
-          "destination",
-          "time_In",
-          "time_Out",
-          "priority",
-          "status",
-          "type",
+          "ConsignmentID", 
+          "ConsignmentNo",
+          "CustomerID", 
+          "RunsheetID",
+          "Source_ID",
+          "Destination_ID",
+          "TimeIn",
+          "TimeOut",
+          "ConsignmentStatusID",
+          "ConsignmentTypeID",
         ]}
-        data={consignmentsData.filter(item =>
-          item.consig.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          (status === "" || item.status.toLowerCase() === status.toLowerCase())
-        )}
+        data={consignmentsData}
         editPageUrl="/edit-consignment"
         pageSpecificIcons={faTruck}
       />
