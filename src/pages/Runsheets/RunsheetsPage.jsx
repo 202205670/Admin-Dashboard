@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; 
+import axiosInstance from '../../server/axios.instance'
 
 const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const navigate = useNavigate();
@@ -10,100 +11,26 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
   const [runsheetsData, setRunsheetsData] = useState([
-    {
-      id: 1,
-      runsheet: "12321",
-      driver: "Ahmad Ahmad",
-      vehicle: "x285",
-      startTime: "08:00 AM",
-      finishTime: "10:00 PM",
-      restTime: "7:00 PM",
-      status: "Open",
-      addedBy: "Bassam",
-      branch: "Sydney",
-    },
-    {
-      id: 2,
-      runsheet: "12322",
-      driver: "John Doe",
-      vehicle: "y456",
-      startTime: "09:00 AM",
-      finishTime: "06:00 PM",
-      restTime: "5:00 PM",
-      status: "Closed",
-      addedBy: "Ali",
-      branch: "Melbourne",
-    },
-    {
-      id: 3,
-      runsheet: "12323",
-      driver: "Sara Smith",
-      vehicle: "z789",
-      startTime: "07:00 AM",
-      finishTime: "05:00 PM",
-      restTime: "4:00 PM",
-      status: "Open",
-      addedBy: "Maya",
-      branch: "Brisbane",
-    },
-    {
-      id: 3,
-      runsheet: "12323",
-      driver: "Sara Smith",
-      vehicle: "z789",
-      startTime: "07:00 AM",
-      finishTime: "05:00 PM",
-      restTime: "4:00 PM",
-      status: "Open",
-      addedBy: "Maya",
-      branch: "Brisbane",
-    },
-    {
-      id: 3,
-      runsheet: "12323",
-      driver: "Sara Smith",
-      vehicle: "z789",
-      startTime: "07:00 AM",
-      finishTime: "05:00 PM",
-      restTime: "4:00 PM",
-      status: "Open",
-      addedBy: "Maya",
-      branch: "Brisbane",
-    },
-    {
-      id: 3,
-      runsheet: "12323",
-      driver: "Sara Smith",
-      vehicle: "z789",
-      startTime: "07:00 AM",
-      finishTime: "05:00 PM",
-      restTime: "4:00 PM",
-      status: "Open",
-      addedBy: "Maya",
-      branch: "Brisbane",
-    },
-    {
-      id: 3,
-      runsheet: "12323",
-      driver: "Sara Smith",
-      vehicle: "z789",
-      startTime: "07:00 AM",
-      finishTime: "05:00 PM",
-      restTime: "4:00 PM",
-      status: "Open",
-      addedBy: "Maya",
-      branch: "Brisbane",
-    },
+   
   ]);
 
-  const activeCount = runsheetsData.filter(item => item.status === "Open").length;
-  const inactiveCount = runsheetsData.filter(item => item.status === "Closed").length;
+  // const activeCount = runsheetsData.filter(item => item.status === "Open").length;
+  // const inactiveCount = runsheetsData.filter(item => item.status === "Closed").length;
 
   useEffect(() => {
     if (typeof updateRunsheetCount === "function") {
-      updateRunsheetCount({ active: activeCount, inactive: inactiveCount });
+      updateRunsheetCount({ active: runsheetsData.length, inactive: runsheetsData.length });
     }
-  }, [activeCount, inactiveCount, updateRunsheetCount]);
+  }, [updateRunsheetCount,runsheetsData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get("/runsheets")
+      setRunsheetsData(response.data)
+    }
+   
+    fetchData()
+  },[])
 
   if (showRecords) return null;
 
@@ -132,21 +59,17 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          "runsheet",
-          "driver",
-          "vehicle",
-          "startTime",
-          "finishTime",
-          "restTime",
-          "status",
-          "addedBy",
-          "branch",
+          "RunsheetID",
+          "DriverID",
+          "VehicleID",
+          "VehicleSafety",
+          "DriverSafety",
+          "StartTime",
+          "FinishTime",
+          "RestTime",
+          "FuelAdded",
         ]}
-        data={runsheetsData.filter((item) => 
-          item.runsheet.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          (branch === "" || item.branch === branch) &&
-          (status === "" || item.status === status)
-        )}
+        data={runsheetsData}
         editPageUrl="/edit-runsheet"
         pageSpecificIcons={faFileExcel}
         isRunsheetPage={true} 

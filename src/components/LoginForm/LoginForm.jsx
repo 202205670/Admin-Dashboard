@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 import eyeOpen from '../../assets/images/eyeOpen.svg';
 import eyeClosed from '../../assets/images/eyeClosed.svg';
+import axiosInstance from '../../server/axios.instance'
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -17,14 +18,30 @@ const LoginForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
     } else {
-      setError('');
-      console.log('Form Submitted', formData);
-      navigate('/dashboard'); // Navigate to dashboard on form submit
+      setError("")
+       try {
+        const response = await axiosInstance.post('/login', {
+          username: formData.email,
+          password: formData.password,
+        });
+  
+        // Extract token from the response
+        const { token } = response.data;
+  
+        // Store token in localStorage
+        localStorage.setItem('token', token);
+  
+        // Navigate to the dashboard
+        navigate('/dashboard');
+      } catch (err) {
+        console.error('Login error:', err);
+        setError('Invalid credentials. Please try again.');
+      }
     }
   };
 
@@ -45,7 +62,7 @@ const LoginForm = () => {
         <form className="loginFormForm_login" onSubmit={handleSubmit}>
           <label htmlFor="email" className="label_login">Email</label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             value={formData.email}
@@ -82,12 +99,12 @@ const LoginForm = () => {
           </button>
 
           <div className="recaptchaContainer_login">
-            { 
+            {/* { 
             <ReCAPTCHA
-              sitekey="YOUR_SITE_KEY"  // Replace with your actual reCAPTCHA site key
+              sitekey="6LfH7HEqAAAAAGTRSFbN4RNKIbTf3kPV25R8Rkd"  // Replace with your actual reCAPTCHA site key
               onChange={onReCAPTCHAChange}
             />
-            }
+            } */}
           </div>
         </form>
       </div>

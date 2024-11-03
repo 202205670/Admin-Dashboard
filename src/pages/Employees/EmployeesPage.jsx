@@ -4,36 +4,32 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useStatusCount from "../../hooks/useStatusCount"; // Assuming this hook calculates active/inactive counts
+import axiosInstance from '../../server/axios.instance'
 
 const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
-  
-  const employeesData = [
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
-    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
-    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
-    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Active", address: "456 Oak St" },
-    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
-    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
-    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
-    { id: 1, name: "Alice Johnson", email: "alice@example.com", phone: "555-111-2222", branch: "Sydney", status: "Active", address: "123 Elm St" },
-    { id: 2, name: "Bob Brown", email: "bob@example.com", phone: "555-333-4444", branch: "Brisbane", status: "Not Active", address: "456 Oak St" },
-    { id: 3, name: "Charlie White", email: "charlie@example.com", phone: "555-555-6666", branch: "Melbourne", status: "Active", address: "789 Pine St" },
-  
-  ];
+  const [employeeData,setEmployeeData] = useState([])
 
-  const { activeCount, inactiveCount } = useStatusCount(employeesData);
+
+  const { activeCount, inactiveCount } = useStatusCount(employeeData);
 
   useEffect(() => {
     if (typeof updateEmployeeCount === "function") {
       updateEmployeeCount({ active: activeCount, inactive: inactiveCount });
     }
   }, [activeCount, inactiveCount, updateEmployeeCount]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get("/employees")
+      setEmployeeData(response.data)
+    }
+   
+    fetchData()
+  },[])
 
   if (showRecords) return null;
 
@@ -55,12 +51,8 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["name", "email", "phone", "branch", "status", "address"]}
-        data={employeesData.filter(employee => 
-          employee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          (branch === "" || employee.branch === branch) &&
-          (status === "" || employee.status === status)
-        )}
+        columns={["EmployeeID", "UserID", "Email", "FirstName", "LastName", "Address_ID"]}
+        data={employeeData}
         editPageUrl="/edit-employee"
         pageSpecificIcons={faUser}
       />

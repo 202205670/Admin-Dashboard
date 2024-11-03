@@ -52,10 +52,10 @@ const TableComponent = ({ columns, data, editPageUrl, pageSpecificIcons, isRunsh
                   {pageSpecificIcons && (
                     <FontAwesomeIcon icon={pageSpecificIcons} className="row-icon" />
                   )}
-                  {row[getColumnKey(columns[0])] || 'N/A'} {/* Default value if undefined */}
+                  {row[getColumnKey(columns[0])] || 'Null'} {/* Default value if undefined */}
                 </td>
                 {columns.slice(1).map((column, colIndex) => (
-                  <td key={colIndex + 1}>{row[getColumnKey(column)] || 'N/A'}</td> // Default value if undefined
+                  <td key={colIndex + 1}>{row[getColumnKey(column)] || 'Null'}</td> // Default value if undefined
                 ))}
                 <td>
                   <button
