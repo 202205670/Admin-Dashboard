@@ -6,7 +6,7 @@ import eyeOpen from '../../assets/images/eyeOpen.svg';
 import eyeClosed from '../../assets/images/eyeClosed.svg';
 import axiosInstance from '../../server/axios.instance'
 
-const LoginForm = () => {
+const LoginForm = ({setIsAuthenticated}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +36,7 @@ const LoginForm = () => {
         // Store token in localStorage
         localStorage.setItem('token', token);
   
+        setIsAuthenticated(true)
         // Navigate to the dashboard
         navigate('/dashboard');
       } catch (err) {
