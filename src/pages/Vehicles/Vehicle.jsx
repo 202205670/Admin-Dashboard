@@ -4,7 +4,7 @@ import { faTruck } from "@fortawesome/free-solid-svg-icons";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this is correctly imported
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
-import axiosInstance from '../../server/axios.instance'
+import axiosInstance from "../../server/axios.instance";
 
 const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   const navigate = useNavigate();
@@ -13,8 +13,6 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   const [status, setStatus] = useState("");
   const [vehiclesData, setVehiclesData] = useState([
     // Sample data for vehicles - replace with actual data source
-   
-   
   ]);
 
   // Calculate active and inactive counts
@@ -28,12 +26,12 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get("/vehicles")
-      setVehiclesData(response.data)
-    }
-   
-    fetchData()
-  },[])
+      const response = await axiosInstance.get("/admin/vehicle");
+      setVehiclesData(response.data?.vehicles);
+    };
+
+    fetchData();
+  }, []);
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
@@ -43,7 +41,11 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
     <PageWrapper
       title="Vehicles"
       filters={["search", "branch", "status"]}
-      placeholders={{ search: "Search by Vehicle #", branch: "Branch", status: "Status" }}
+      placeholders={{
+        search: "Search by Vehicle #",
+        branch: "Branch",
+        status: "Status",
+      }}
       addButtonLabel="Add Vehicle"
       onAddClick={() => navigate("/add-vehicle")}
       showAddButton={true}
@@ -53,7 +55,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["VehicleID", "PlateNb", "BranchID", "StatusId", "VehicleTypeID"]}
+        columns={["id", "plateNumber", "branchId", "statusId", "vehicleTypeId"]}
         data={vehiclesData}
         editPageUrl="/edit-vehicle"
         pageSpecificIcons={faTruck}

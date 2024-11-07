@@ -4,15 +4,14 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import useStatusCount from "../../hooks/useStatusCount"; // Assuming this hook calculates active/inactive counts
-import axiosInstance from '../../server/axios.instance'
+import axiosInstance from "../../server/axios.instance";
 
 const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
-  const [employeeData,setEmployeeData] = useState([])
-
+  const [employeeData, setEmployeeData] = useState([]);
 
   const { activeCount, inactiveCount } = useStatusCount(employeeData);
 
@@ -24,12 +23,12 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get("/employees")
-      setEmployeeData(response.data)
-    }
-   
-    fetchData()
-  },[])
+      const response = await axiosInstance.get("/admin/employee");
+      setEmployeeData(response.data?.employees);
+    };
+
+    fetchData();
+  }, []);
 
   if (showRecords) return null;
 
@@ -51,7 +50,15 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["EmployeeID", "UserID", "Email", "FirstName", "LastName", "Address_ID"]}
+        columns={[
+          "id",
+          "userId",
+          "email",
+          "firstName",
+          "lastName",
+          "branchId",
+          "addressId",
+        ]}
         data={employeeData}
         editPageUrl="/edit-employee"
         pageSpecificIcons={faUser}

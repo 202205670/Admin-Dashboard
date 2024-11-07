@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { faTruck } from '@fortawesome/free-solid-svg-icons'; // Consignment icon
+import { faTruck } from "@fortawesome/free-solid-svg-icons"; // Consignment icon
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this path is correct
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
-import axiosInstance from '../../server/axios.instance'
+import axiosInstance from "../../server/axios.instance";
 
 const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
   const navigate = useNavigate();
@@ -23,12 +23,12 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get("/consignments")
-      setConsignmentsData(response.data)
-    }
-   
-    fetchData()
-  },[])
+      const response = await axiosInstance.get("/admin/consignment");
+      setConsignmentsData(response.data?.consignments);
+    };
+
+    fetchData();
+  }, []);
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
@@ -48,16 +48,16 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          "ConsignmentID", 
-          "ConsignmentNo",
-          "CustomerID", 
-          "RunsheetID",
-          "Source_ID",
-          "Destination_ID",
-          "TimeIn",
-          "TimeOut",
-          "ConsignmentStatusID",
-          "ConsignmentTypeID",
+          "id",
+          "consignmentNo",
+          "customerId",
+          "runsheetId",
+          "sourceId",
+          "destinationId",
+          "timeIn",
+          "timeOut",
+          "statusId",
+          "typeId",
         ]}
         data={consignmentsData}
         editPageUrl="/edit-consignment"

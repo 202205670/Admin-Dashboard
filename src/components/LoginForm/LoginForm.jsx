@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
- import ReCAPTCHA from 'react-google-recaptcha'; // Commented for now
-import './LoginForm.css';
-import eyeOpen from '../../assets/images/eyeOpen.svg';
-import eyeClosed from '../../assets/images/eyeClosed.svg';
-import axiosInstance from '../../server/axios.instance'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha"; // Commented for now
+import "./LoginForm.css";
+import eyeOpen from "../../assets/images/eyeOpen.svg";
+import eyeClosed from "../../assets/images/eyeClosed.svg";
+import axiosInstance from "../../server/axios.instance";
 
-const LoginForm = ({setIsAuthenticated}) => {
+const LoginForm = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-   const [isVerified, setIsVerified] = useState(false); // Commented for now
+  const [error, setError] = useState("");
+  const [isVerified, setIsVerified] = useState(false); // Commented for now
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,27 +21,27 @@ const LoginForm = ({setIsAuthenticated}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
     } else {
-      setError("")
-       try {
-        const response = await axiosInstance.post('/login', {
-          username: formData.email,
+      setError("");
+      try {
+        const response = await axiosInstance.post("/auth/login", {
+          email: formData.email,
           password: formData.password,
         });
-  
+
         // Extract token from the response
-        const { token } = response.data;
-  
+        const { token } = response.data.data;
+
         // Store token in localStorage
-        localStorage.setItem('token', token);
-  
-        setIsAuthenticated(true)
+        localStorage.setItem("token", token);
+
+        setIsAuthenticated(true);
         // Navigate to the dashboard
-        navigate('/dashboard');
+        navigate("/dashboard");
       } catch (err) {
-        console.error('Login error:', err);
-        setError('Invalid credentials. Please try again.');
+        console.error("Login error:", err);
+        setError("Invalid credentials. Please try again.");
       }
     }
   };
@@ -50,18 +50,21 @@ const LoginForm = ({setIsAuthenticated}) => {
     setShowPassword(!showPassword);
   };
 
-  
-   const onReCAPTCHAChange = (value) => {
-   setIsVerified(!!value);
-   };
+  const onReCAPTCHAChange = (value) => {
+    setIsVerified(!!value);
+  };
 
   return (
     <div className="LoginForm_login">
       <div className="loginFormContainer_login">
-        <h2 className="loginHeader_login">Log<span style={{ color: '#d4af37' }}>in</span> to your Account</h2>
+        <h2 className="loginHeader_login">
+          Log<span style={{ color: "#d4af37" }}>in</span> to your Account
+        </h2>
         {error && <div className="error_login">{error}</div>}
         <form className="loginFormForm_login" onSubmit={handleSubmit}>
-          <label htmlFor="email" className="label_login">Email</label>
+          <label htmlFor="email" className="label_login">
+            Email
+          </label>
           <input
             type="text"
             id="email"
@@ -72,10 +75,12 @@ const LoginForm = ({setIsAuthenticated}) => {
             className="inputField_login"
             required
           />
-          <label htmlFor="password" className="label_login">Password</label>
+          <label htmlFor="password" className="label_login">
+            Password
+          </label>
           <div className="inputContainer_login">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password}
@@ -92,9 +97,11 @@ const LoginForm = ({setIsAuthenticated}) => {
             />
           </div>
           <div className="forgotPasswordContainer_login">
-            <a href="#" className="forgotPasswordLink_login">Forgot your password?</a>
+            <a href="#" className="forgotPasswordLink_login">
+              Forgot your password?
+            </a>
           </div>
-      
+
           <button type="submit" className="loginButton_login">
             Sign In
           </button>

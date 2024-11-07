@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout"; // Import layout
 
@@ -44,7 +44,10 @@ function App() {
     <Router>
       <Layout isAuthenticated={isAuthenticated}>
         <Routes>
-          <Route path="/" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
+          <Route
+            path="/"
+            element={<LoginPage setIsAuthenticated={setIsAuthenticated} />}
+          />
           <Route path="/dashboard" element={<Dashboard />} />
 
           <Route path="/drivers" element={<DriverList />} />

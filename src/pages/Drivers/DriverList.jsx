@@ -4,15 +4,15 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this is correctly imported
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
-import axiosInstance from '../../server/axios.instance'
+import axiosInstance from "../../server/axios.instance";
 
 const DriversPage = ({ updateDriverCount, showRecords }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
-  const [driversData, setDriversData] = useState([
-  ]);
+  const [loading, setLoading] = useState(false);
+  const [driversData, setDriversData] = useState([]);
 
   // Calculate active and inactive counts
   const { activeCount, inactiveCount } = useStatusCount(driversData);
@@ -25,16 +25,17 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get("/drivers")
-      console.log(response)
-      setDriversData(response.data)
-    }
-   
-    fetchData()
-  },[])
+      const response = await axiosInstance.get("/admin/drivers");
+      setDriversData(response.data?.drivers);
+    };
+
+    fetchData();
+  }, []);
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
+
+  if (loading) return <div>Loading...</div>;
 
   // If showRecords is true, render the driver records and UI
   return (
@@ -54,7 +55,14 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
       onStatusChange={(value) => setStatus(value)}
     >
       <TableComponent
-        columns={["FirstName", "LastName", "Email", "DriverID", "BranchID", "Address_ID"]}
+        columns={[
+          "id",
+          "userId",
+          "email",
+          "firstName",
+          "lastName",
+          "addressId",
+        ]}
         data={driversData}
         editPageUrl="/edit-driver"
         pageSpecificIcons={faUser}
