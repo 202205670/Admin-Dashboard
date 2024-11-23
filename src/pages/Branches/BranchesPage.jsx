@@ -24,6 +24,7 @@ const BranchesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/branch");
+      console.log(response.data.branches)
       setBranchesData(response.data?.branches);
     };
 

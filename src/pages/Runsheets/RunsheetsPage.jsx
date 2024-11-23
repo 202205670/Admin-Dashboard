@@ -27,7 +27,25 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/runsheet");
-      setRunsheetsData(response.data?.runsheets);
+      console.log(response.data?.runsheets);
+      const transformedData = response.data?.runsheets.map(runsheet => ({
+        id: runsheet.id,
+        statusId: runsheet.statusId,
+        branchName: runsheet.branch.name,
+        driverName: `${runsheet.driver?.firstName || "Unknown"} ${runsheet.driver?.lastName || "Unknown"}`,
+        vehicle: runsheet.vehicle?.plateNumber || "Unknown Vehicle",
+        startTime: runsheet.vehicle?.startTime
+          ? new Date(runsheet.vehicle.startTime).toISOString().split("T")[0]
+          : "N/A", // Fallback for missing startTime
+        finishTime: runsheet.vehicle?.finishTime
+          ? new Date(runsheet.vehicle.finishTime).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0], // Current date as fallback for finishTime
+        restTime: runsheet.vehicle?.restTime
+          ? new Date(runsheet.vehicle.restTime).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0], // Current date as fallback for restTime
+      }));
+      
+      setRunsheetsData(transformedData);
     };
 
     fetchData();
@@ -61,11 +79,13 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       <TableComponent
         columns={[
           "id",
-          "driverId",
-          "vehicleId",
+          "branchName",
+          "driverName",
+          "vehicle",
           "startTime",
           "finishTime",
           "restTime",
+          "statusId"
         ]}
         data={runsheetsData}
         editPageUrl="/edit-runsheet"
