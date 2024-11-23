@@ -27,7 +27,14 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/vehicle");
-      setVehiclesData(response.data?.vehicles);
+      const transformedData = response.data?.vehicles.map(vehicle => ({
+        id: vehicle?.id,
+        plateNumber: vehicle.plateNumber,
+        branchName: vehicle.branch?.name ,
+        vehicleTypeName: vehicle.vehicleType?.name,
+        statusId: vehicle.statusId
+      }));
+      setVehiclesData(transformedData);
     };
 
     fetchData();
@@ -55,7 +62,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["id", "plateNumber", "branchId", "statusId", "vehicleTypeId"]}
+        columns={["id", "plateNumber", "branchName", "statusId", "vehicleTypeName"]}
         data={vehiclesData}
         editPageUrl="/edit-vehicle"
         pageSpecificIcons={faTruck}

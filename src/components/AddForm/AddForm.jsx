@@ -91,8 +91,8 @@ const AddForm = ({
                       Select {field.label}
                     </option>
                     {field.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                      <option key={option} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>

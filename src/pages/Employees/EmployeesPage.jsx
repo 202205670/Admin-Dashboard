@@ -24,7 +24,17 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/employee");
-      setEmployeeData(response.data?.employees);
+      console.log(response.data?.employees);
+      const transformedData = response.data?.employees.map(employee => ({
+        email: employee?.email,
+        firstName: employee?.firstName,
+        lastName: employee?.lastName,
+        branch: employee?.branch.name,
+        address: employee?.address?.city || "N/A",
+        statusId: employee.user.statusId
+      }));
+      setEmployeeData(transformedData);
+      console.log(response.data?.employees);
     };
 
     fetchData();
@@ -51,13 +61,14 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          "id",
-          "userId",
+          // "id",
+          // "userId",
           "email",
           "firstName",
           "lastName",
-          "branchId",
-          "addressId",
+          "branch",
+          "address",
+          "statusId"
         ]}
         data={employeeData}
         editPageUrl="/edit-employee"

@@ -26,7 +26,17 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/drivers");
-      setDriversData(response.data?.drivers);
+      console.log(response.data?.drivers);
+      const transformedData = response.data?.drivers.map(driver => ({
+        email: driver?.email,
+        firstName: driver?.firstName,
+        lastName: driver?.lastName,
+        branch: driver?.branch.name,
+        phoneNumber: driver?.phoneNumber,
+        address: driver?.address?.city || "N/A",
+        statusId: driver.user.statusId
+      }));
+      setDriversData(transformedData);
     };
 
     fetchData();
@@ -56,12 +66,15 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          "id",
-          "userId",
+          // "id",
+          // "userId",
           "email",
           "firstName",
           "lastName",
-          "addressId",
+          "branch",
+          "phoneNumber",
+          "address",
+          "statusId"
         ]}
         data={driversData}
         editPageUrl="/edit-driver"

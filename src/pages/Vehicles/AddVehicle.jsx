@@ -1,35 +1,72 @@
-import React from "react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
+import axiosInstance from "../../server/axios.instance";
 
 const AddVehicle = () => {
   const navigate = useNavigate(); // Initialize useNavigate
+  const [branchOptions, setBranchOptions] = useState([]);
+  const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
 
-  // Define the options for the Branch select field
-  const branchOptions = ['Sydney', 'Brisbane', 'Melbourne'];
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const branchResponse = await axiosInstance.get("/admin/branch");
+        setBranchOptions(
+          branchResponse?.data?.branches?.map((branch) => ({
+            label: branch.name,
+            value: branch.id,
+          }))
+        );
+
+        const vehicleTypeResponse = await axiosInstance.get(
+          "/admin/vehicle/type"
+        );
+        setVehicleTypeOptions(
+          vehicleTypeResponse?.data?.vehicleTypes?.map((type) => ({
+            label: type.name,
+            value: type.id,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
+    };
+
+    fetchOptions();
+  }, []);
 
   // Define the fields for the Add Vehicle form
   const vehicleFields = [
-    { label: 'Plate #', type: 'text', name: 'plateNumber' },
+    { label: "Plate #", type: "text", name: "plateNumber" },
     {
-      label: 'Branch', 
-      type: 'select', // Change to 'select' for dropdown
-      name: 'branch',
-      options: branchOptions // Include the options for the select
+      label: "Branch",
+      type: "select",
+      name: "branchId",
+      options: branchOptions,
     },
-    { label: 'Vehicle Type', type: 'text', name: 'vehicleType' },
+    {
+      label: "Vehicle Type",
+      type: "select",
+      name: "vehicleTypeId",
+      options: vehicleTypeOptions,
+    },
   ];
 
-  // Handle form submission
-  const handleSubmit = (formData) => {
-    console.log('Vehicle Form Data:', formData);
-    // Implement API integration for form submission here
+  const handleSubmit = async (formData) => {
+    try {
+      await axiosInstance.post("/admin/vehicle", formData);
+
+      navigate("/vehicles");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   // Handle cancellation
   const handleCancel = () => {
-    navigate('/vehicles'); // Navigate to Vehicle List page
+    navigate("/vehicles"); // Navigate to Vehicle List page
   };
 
   const title = "Create New Vehicle"; // Set the title
@@ -40,17 +77,16 @@ const AddVehicle = () => {
       filters={[]}
       title={""} // Set the title to be displayed
     >
-      <AddForm 
+      <AddForm
         title={title}
         fields={vehicleFields}
-        statusLabel="Active" 
-        showStatusCheckbox={true} 
+        statusLabel="Active"
+        showStatusCheckbox={true}
         onSubmit={handleSubmit}
-        onCancel={handleCancel}  // Pass handleCancel function
+        onCancel={handleCancel} // Pass handleCancel function
       />
     </PageWrapper>
   );
 };
 
 export default AddVehicle;
-  
