@@ -1,43 +1,76 @@
-  import React from "react";
+  import React, { useEffect, useState } from "react";
   import { useNavigate } from 'react-router-dom'; // Import useNavigate
   import PageWrapper from "../../components/PageWrapper/PageWrapper";
   import AddForm from "../../components/AddForm/AddForm";
+  import axiosInstance from '../../server/axios.instance'
 
   const AddConsignment = () => {
     const navigate = useNavigate(); // Initialize useNavigate
+    const [customerOptions, setCustomerOptions] = useState([]);
+    const [runsheetOptions, setRunsheetOptions] = useState([]);
+    const [sourceOptions, setSourceOptions] = useState([]);
+    const [destinationOptions, setDestinationOptions] = useState([]);
+
+    useEffect(() => {
+      const fetchOptions = async () => {
+        try {
+          const customerResponse = await axiosInstance.get("/admin/consignment/customers");
+          setCustomerOptions(
+            customerResponse.data.customers.map((customer) => ({
+              label: customer.name,
+              value: customer.id,
+            }))
+          );
+  
+          const runsheetResponse = await axiosInstance.get("/admin/runsheet");
+          setRunsheetOptions(
+            runsheetResponse.data.runsheets.map((runsheet) => ({
+              label: `Runsheet# ${runsheet.id}`,
+              value: runsheet.id,
+            }))
+          );
+  
+          const locationResponse = await axiosInstance.get("/admin/branch/address");
+          setSourceOptions(
+            locationResponse.data.address.map((location) => ({
+              label: location.city,
+              value: location.id,
+            }))
+          );
+          setDestinationOptions(
+            locationResponse.data.address.map((location) => ({
+              label: location.city,
+              value: location.id,
+            }))
+          );
+        } catch (error) {
+          console.error("Error fetching options:", error);
+        }
+      };
+  
+      fetchOptions();
+    }, []);
 
     // Define the fields for the Add Consignment form
     const consignmentFields = [
-      { label: 'Consignment #', type: 'text', name: 'consignmentNumber' },
-      { label: 'Customer', type: 'text', name: 'customer' },
-      { label: 'Runsheet', type: 'text', name: 'runsheet' },
-      { label: 'Source', type: 'text', name: 'source' },
-      { label: 'Destination', type: 'text', name: 'destination' },
-
-      { label: 'Time In', type: 'time', name: 'timeIn' },
-      { label: 'Time Out', type: 'time', name: 'timeOut' },
-
-    // { label: 'Time In', type: 'datetime-local', name: 'timeIn' },
-    // { label: 'Time Out', type: 'datetime-local', name: 'timeOut' },
-      { 
-        label: 'Priority', 
-        type: 'text', 
-        name: 'priority', 
-        
-      },
-      { 
-        label: 'Consignment Type', 
-        type: 'select', 
-        name: 'consignmentType', 
-        options: ['Delivery', 'Pickup'], 
-      },
-      { label: 'Description', type: 'textarea', name: 'description' },
+      { label: "Consignment #", type: "text", name: "consignmentNo" },
+      { label: "Customer", type: "select", name: "customerId", options: customerOptions },
+      { label: "Runsheet", type: "select", name: "runsheetId", options: runsheetOptions },
+      { label: "Source", type: "select", name: "sourceId", options: sourceOptions },
+      { label: "Destination", type: "select", name: "destinationId", options: destinationOptions },
+      { label: "Consignment Type", type: "select", name: "typeId", options: [{label:"Delivery",value:1}, {label:"Pickup",value:2}] },
+      { label: "Description", type: "textarea", name: "description" },
     ];
 
-    // Handle form submission
-    const handleSubmit = (formData) => {
-      console.log('Consignment Form Data:', formData);
-      // You can implement the API integration for form submission here
+    const handleSubmit = async (formData) => {
+      try {
+        console.log(formData)
+        const response = await axiosInstance.post("/admin/consignment", formData);
+        console.log("Consignment created:", response.data);
+        navigate("/consignments");
+      } catch (error) {
+        console.error("Error creating consignment:", error);
+      }
     };
 
     // Handle cancellation
