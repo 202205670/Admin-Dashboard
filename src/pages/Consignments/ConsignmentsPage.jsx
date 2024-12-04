@@ -33,13 +33,13 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
         source: consignment.source.city,
         destination: consignment.destination.city,
         timeIn: consignment.timeIn
-          ? new Date(consignment.timeIn).toISOString().split("T")[0]
+          ? `${new Date(consignment.timeIn).toLocaleDateString("en-GB")} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
           : "N/A", // Fallback for missing timein
         timeOut: consignment.timeOut
-          ? new Date(consignment.timeOut).toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0], // Current date as fallback for time out
+        ? `${new Date(consignment.timeOut).toLocaleDateString("en-GB")} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
+        : "N/A",
         priority: consignment.priority,
-        statusId: consignment.statusId,
+        status: consignment.statusId === 1 ? "Active" : "Not Active",
         type: consignment.typeId === 1 ? "Pick-Up" : "Delivery"
       }));
       setConsignmentsData(transformedData);
@@ -75,7 +75,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
           "timeIn",
           "timeOut",
           "priority",
-          "statusId",
+          "status",
           "type",
         ]}
         data={consignmentsData}

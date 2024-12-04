@@ -8,6 +8,7 @@ const AddEmployee = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   
   const [branchOptions, setBranchOptions] = useState([]);
+  const [addressOptions, setAddressOptions] = useState([]);
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -23,7 +24,21 @@ const AddEmployee = () => {
       }
     };
 
+    const fetchAddresses = async () => {
+      try {
+        const response = await axiosInstance.get("/admin/branch/address"); 
+        const addresses = response?.data.address.map((addr) => ({
+          label: addr.city, // Assuming fullAddress is available
+          value: addr.id,
+        }));
+        setAddressOptions(addresses);
+      } catch (error) {
+        console.error("Error fetching addresses:", error);
+      }
+    };
+
     fetchBranches();
+    fetchAddresses();
   }, []);
   
   const employeeFields = [
@@ -37,6 +52,12 @@ const AddEmployee = () => {
       type: "select",
       name: "branchId",
       options: branchOptions,
+    },
+    {
+      label: "Address",
+      type: "select",
+      name: "addressId",
+      options: addressOptions,
     },
   ];
 
