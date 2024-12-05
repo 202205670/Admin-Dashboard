@@ -45,7 +45,6 @@ const AddEmployee = () => {
     { label: "Username", type: "text", name: "username" },
     { label: "First Name", type: "text", name: "firstName" },
     { label: "Last Name", type: "text", name: "lastName" },
-    { label: "Phone Number", type: "text", name: "phoneNumber" },
     { label: "Email", type: "email", name: "email" },
     {
       label: "Branch",

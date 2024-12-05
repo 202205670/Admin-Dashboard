@@ -17,11 +17,12 @@ const EditForm = ({
   onAssignConsignment,
   onDeleteConsignment,
   isEditRunsheetPage,
+  initialValues = {},
 }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
       if (!field.sectionTitle) {
-        acc[field.name] = '';
+        acc[field.name] = initialValues[field.name];
       }
       return acc;
     }, {})
@@ -95,8 +96,8 @@ const EditForm = ({
                       Select {field.label}
                     </option>
                     {field.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                      <option key={option} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>

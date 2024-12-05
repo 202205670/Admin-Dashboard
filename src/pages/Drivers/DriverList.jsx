@@ -28,6 +28,7 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
       const response = await axiosInstance.get("/admin/drivers");
       console.log(response.data?.drivers);
       const transformedData = response.data?.drivers.map(driver => ({
+        id: driver?.id,
         email: driver?.email,
         firstName: driver?.firstName,
         lastName: driver?.lastName,

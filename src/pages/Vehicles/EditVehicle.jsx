@@ -1,31 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate and useParams
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm";
+import axiosInstance from '../../server/axios.instance'
 
 const EditVehicle = () => {
   const navigate = useNavigate(); // Initialize useNavigate
-  const { vehicleId } = useParams(); // Get vehicle ID from URL parameters
+  const { id } = useParams(); // Get vehicle ID from URL parameters
+  const [branchOptions, setBranchOptions] = useState([]);
+  const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
+  const [vehicleData, setVehicleData] = useState(null);
+ 
 
-  // Define the options for the Branch select field
-  const branchOptions = ['Sydney', 'Brisbane', 'Melbourne'];
+  useEffect(() => {
+    const fetchVehicleData = async () => {
+      try {
+        const response = await axiosInstance.get(`/admin/vehicle/single/${id}`);
+        setVehicleData({
+          plateNumber: response.data.vehicle.plateNumber,
+          branchId:response.data.vehicle.branchId,
+          vehicleTypeId:response.data.vehicle.vehicleTypeId
+        });
+      } catch (error) {
+        console.error("Error fetching vehicle data:", error);
+      }
+    };
 
-  // Define the fields for the Edit Vehicle form
+    const fetchOptions = async () => {
+      try {
+        const branchResponse = await axiosInstance.get("/admin/branch");
+        setBranchOptions(
+          branchResponse?.data?.branches?.map((branch) => ({
+            label: branch.name,
+            value: branch.id,
+          }))
+        );
+
+        const vehicleTypeResponse = await axiosInstance.get(
+          "/admin/vehicle/type"
+        );
+        setVehicleTypeOptions(
+          vehicleTypeResponse?.data?.vehicleTypes?.map((type) => ({
+            label: type.name,
+            value: type.id,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
+    };
+
+    fetchOptions();
+    fetchVehicleData()
+  }, []);
+
   const vehicleFields = [
-    { label: 'Plate #', type: 'text', name: 'plateNumber' },
+    { label: "Plate #", type: "text", name: "plateNumber" },
     {
-      label: 'Branch',
-      type: 'select', // Change to 'select' for dropdown
-      name: 'branch',
-      options: branchOptions // Include the options for the select
+      label: "Branch",
+      type: "select",
+      name: "branchId",
+      options: branchOptions,
     },
-    { label: 'Vehicle Type', type: 'text', name: 'vehicleType' },
+    {
+      label: "Vehicle Type",
+      type: "select",
+      name: "vehicleTypeId",
+      options: vehicleTypeOptions,
+    },
   ];
 
   // Handle form submission
-  const handleSubmit = (formData) => {
-    console.log('Updated Vehicle Data:', formData);
-    navigate('/vehicles'); // Navigate to Vehicle List page after editing
+  const handleSubmit = async (formData) => {
+    try {
+      await axiosInstance.put(`/admin/vehicle/${id}`, formData);
+      navigate("/vehicles"); // Redirect to the Driver List page
+    } catch (error) {
+      console.error("Error updating driver:", error);
+    }
   };
 
   // Handle cancellation
@@ -41,15 +93,17 @@ const EditVehicle = () => {
       filters={[]}
       title={""} // Set the title to be displayed
     >
-      <EditForm 
+      {vehicleData && <EditForm 
         title={title}
         fields={vehicleFields}
+        initialValues={vehicleData}
         statusLabel="Active"
         showStatusCheckbox={true}
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
         initialData={{}} // No initial data is provided, as requested
-      />
+      />}
+      
     </PageWrapper>
   );
 };
