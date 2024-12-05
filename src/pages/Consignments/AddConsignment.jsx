@@ -60,6 +60,7 @@
       { label: "Destination", type: "select", name: "destinationId", options: destinationOptions },
       { label: "Consignment Type", type: "select", name: "typeId", options: [{label:"Delivery",value:1}, {label:"Pickup",value:2}] },
       { label: "Description", type: "textarea", name: "description" },
+      { label: "Priority", type: "number", name: "priority" },
     ];
 
     const handleSubmit = async (formData) => {

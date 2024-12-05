@@ -32,7 +32,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
         plateNumber: vehicle.plateNumber,
         branchName: vehicle.branch?.name ,
         vehicleTypeName: vehicle.vehicleType?.name,
-        statusId: vehicle.statusId
+        status: vehicle.statusId === 1 ? "Active" : "Not Active"
       }));
       setVehiclesData(transformedData);
     };
@@ -62,7 +62,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       statusOptions={["Active", "Not Active"]}
     >
       <TableComponent
-        columns={["id", "plateNumber", "branchName", "statusId", "vehicleTypeName"]}
+        columns={["id", "plateNumber", "branchName",  "vehicleTypeName","status"]}
         data={vehiclesData}
         editPageUrl="/edit-vehicle"
         pageSpecificIcons={faTruck}

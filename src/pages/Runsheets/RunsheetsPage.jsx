@@ -30,19 +30,22 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       console.log(response.data?.runsheets);
       const transformedData = response.data?.runsheets.map(runsheet => ({
         id: runsheet.id,
-        statusId: runsheet.statusId,
+        status: runsheet.statusId === 1 ? "Active" : "Not Active",
         branchName: runsheet.branch.name,
         driverName: `${runsheet.driver?.firstName || "Unknown"} ${runsheet.driver?.lastName || "Unknown"}`,
         vehicle: runsheet.vehicle?.plateNumber || "Unknown Vehicle",
         startTime: runsheet.vehicle?.startTime
-          ? new Date(runsheet.vehicle.startTime).toISOString().split("T")[0]
+          ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
           : "N/A", // Fallback for missing startTime
         finishTime: runsheet.vehicle?.finishTime
-          ? new Date(runsheet.vehicle.finishTime).toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0], // Current date as fallback for finishTime
+        ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
+
+          : `${new Date().toLocaleDateString("en-GB")} ${new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`, // Current date as fallback for finishTime
         restTime: runsheet.vehicle?.restTime
-          ? new Date(runsheet.vehicle.restTime).toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0], // Current date as fallback for restTime
+        ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
+
+          : `${new Date().toLocaleDateString("en-GB")} ${new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`, // Current date as fallback for finishTime
+        
       }));
       
       setRunsheetsData(transformedData);
@@ -85,7 +88,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
           "startTime",
           "finishTime",
           "restTime",
-          "statusId"
+          "status"
         ]}
         data={runsheetsData}
         editPageUrl="/edit-runsheet"
