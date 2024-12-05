@@ -28,6 +28,11 @@ const EditEmployee = () => {
       type: "select",
       name: "addressId",
       options: addressOptions,
+    },   
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
     },
   ];
 
@@ -43,7 +48,8 @@ const EditEmployee = () => {
           phoneNumber:  response.data.employee.phoneNumber,
           email: response.data.employee.email,
           branchId:response.data.employee.branchId,
-          addressId:response.data.employee.addressId
+          addressId:response.data.employee.addressId,
+          active: response.data.employee.statusId === 1 ? true : false
         });
       } catch (error) {
         console.error("Error fetching driver data:", error);
@@ -108,7 +114,6 @@ const EditEmployee = () => {
         fields={employeeFields}  
         statusLabel="Active"
         initialValues={employeeData}
-        showStatusCheckbox={true} 
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       />}

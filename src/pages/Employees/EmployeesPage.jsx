@@ -32,7 +32,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
         lastName: employee?.lastName,
         branch: employee?.branch.name,
         address: employee?.address?.city || "N/A",
-        status: employee.user.statusId === 1 ? "Active" : "Not Active"
+        status: employee.statusId === 1 ? "Active" : "Not Active"
       }));
       setEmployeeData(transformedData);
       console.log(response.data?.employees);

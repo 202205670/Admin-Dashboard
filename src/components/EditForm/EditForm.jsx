@@ -28,6 +28,8 @@ const EditForm = ({
     }, {})
   );
 
+  console.log(initialValues)
+
   const [newConsignment, setNewConsignment] = useState({
     consignmentNumber: '',
     type: '',
@@ -78,6 +80,23 @@ const EditForm = ({
       <form onSubmit={handleSubmit} className="form">
         <div className="form-grid">
           {fields.map((field, index) =>
+          field.type === "checkbox" ?  <div className="status-container">
+          <div className="status-label">Status</div>
+          <div className="checkbox-row">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked={formData.active || false}
+              onChange={(e) =>
+                setFormData({ ...formData, active: e.target.checked })
+              }
+            />
+            <label htmlFor="active" className="checkbox-label">
+              {statusLabel}
+            </label>
+          </div>
+        </div> :
             field.sectionTitle ? (
               <h3 key={index} className="form-section-title">
                 {field.sectionTitle}
@@ -169,7 +188,7 @@ const EditForm = ({
                 type="checkbox"
                 id="active"
                 name="active"
-                checked={formData.active || false}
+                checked={initialValues.active || false}
                 onChange={(e) =>
                   setFormData({ ...formData, active: e.target.checked })
                 }

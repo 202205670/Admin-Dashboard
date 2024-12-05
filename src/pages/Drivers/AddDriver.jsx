@@ -59,6 +59,11 @@ const AddDriver = () => {
       name: "addressId",
       options: addressOptions,
     },
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
+    },
   ];
 
   const handleSubmit = async (formData) => {
@@ -93,7 +98,6 @@ const AddDriver = () => {
         fields={driverFields}
        
         statusLabel="Active" 
-        showStatusCheckbox={true} 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
       />

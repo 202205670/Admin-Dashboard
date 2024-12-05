@@ -22,7 +22,8 @@ const EditDriver = () => {
           phoneNumber:  response.data.driver.phoneNumber,
           email: response.data.driver.email,
           branchId:response.data.driver.branchId,
-          addressId:response.data.driver.addressId
+          addressId:response.data.driver.addressId,
+          active: response.data.driver.statusId === 1 ? true : false
         });
       } catch (error) {
         console.error("Error fetching driver data:", error);
@@ -78,6 +79,11 @@ const EditDriver = () => {
       name: "addressId",
       options: addressOptions,
     },
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
+    },
   ];
 
   const handleSubmit = async (formData) => {
@@ -106,7 +112,6 @@ const EditDriver = () => {
         fields={driverFields} // Pass the fields without placeholders
         initialValues={driverData}
         statusLabel="Active" 
-        showStatusCheckbox={true} 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
       /> }

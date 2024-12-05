@@ -19,7 +19,8 @@ const EditVehicle = () => {
         setVehicleData({
           plateNumber: response.data.vehicle.plateNumber,
           branchId:response.data.vehicle.branchId,
-          vehicleTypeId:response.data.vehicle.vehicleTypeId
+          vehicleTypeId:response.data.vehicle.vehicleTypeId,
+          active: response.data.vehicle.statusId === 1 ? true : false
         });
       } catch (error) {
         console.error("Error fetching vehicle data:", error);
@@ -68,10 +69,17 @@ const EditVehicle = () => {
       name: "vehicleTypeId",
       options: vehicleTypeOptions,
     },
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
+    },
   ];
 
   // Handle form submission
   const handleSubmit = async (formData) => {
+    console.log(formData)
+
     try {
       await axiosInstance.put(`/admin/vehicle/${id}`, formData);
       navigate("/vehicles"); // Redirect to the Driver List page
@@ -98,7 +106,6 @@ const EditVehicle = () => {
         fields={vehicleFields}
         initialValues={vehicleData}
         statusLabel="Active"
-        showStatusCheckbox={true}
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
         initialData={{}} // No initial data is provided, as requested

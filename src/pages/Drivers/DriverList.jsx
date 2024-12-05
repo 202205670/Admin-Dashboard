@@ -35,7 +35,7 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
         branch: driver?.branch.name,
         phoneNumber: driver?.phoneNumber,
         address: driver?.address?.city || "N/A",
-        status: driver.user.statusId === 1 ? "Active" : "Not Active"
+        status: driver.statusId === 1 ? "Active" : "Not Active"
       }));
       setDriversData(transformedData);
     };

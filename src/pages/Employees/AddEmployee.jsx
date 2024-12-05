@@ -58,6 +58,11 @@ const AddEmployee = () => {
       name: "addressId",
       options: addressOptions,
     },
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
+    },
   ];
 
   const handleSubmit = async (formData) => {
@@ -91,7 +96,6 @@ const AddEmployee = () => {
         title={title}
         fields={employeeFields}  
         statusLabel="Active" 
-        showStatusCheckbox={true} 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  
       />
