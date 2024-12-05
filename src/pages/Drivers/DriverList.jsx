@@ -28,13 +28,14 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
       const response = await axiosInstance.get("/admin/drivers");
       console.log(response.data?.drivers);
       const transformedData = response.data?.drivers.map(driver => ({
+        id: driver?.id,
         email: driver?.email,
         firstName: driver?.firstName,
         lastName: driver?.lastName,
         branch: driver?.branch.name,
         phoneNumber: driver?.phoneNumber,
         address: driver?.address?.city || "N/A",
-        status: driver.user.statusId === 1 ? "Active" : "Not Active"
+        status: driver.statusId === 1 ? "Active" : "Not Active"
       }));
       setDriversData(transformedData);
     };

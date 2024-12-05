@@ -17,15 +17,18 @@ const EditForm = ({
   onAssignConsignment,
   onDeleteConsignment,
   isEditRunsheetPage,
+  initialValues = {},
 }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
       if (!field.sectionTitle) {
-        acc[field.name] = '';
+        acc[field.name] = initialValues[field.name];
       }
       return acc;
     }, {})
   );
+
+  console.log(initialValues)
 
   const [newConsignment, setNewConsignment] = useState({
     consignmentNumber: '',
@@ -77,6 +80,23 @@ const EditForm = ({
       <form onSubmit={handleSubmit} className="form">
         <div className="form-grid">
           {fields.map((field, index) =>
+          field.type === "checkbox" ?  <div className="status-container">
+          <div className="status-label">Status</div>
+          <div className="checkbox-row">
+            <input
+              type="checkbox"
+              id="active"
+              name="active"
+              checked={formData.active || false}
+              onChange={(e) =>
+                setFormData({ ...formData, active: e.target.checked })
+              }
+            />
+            <label htmlFor="active" className="checkbox-label">
+              {statusLabel}
+            </label>
+          </div>
+        </div> :
             field.sectionTitle ? (
               <h3 key={index} className="form-section-title">
                 {field.sectionTitle}
@@ -95,8 +115,8 @@ const EditForm = ({
                       Select {field.label}
                     </option>
                     {field.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                      <option key={option} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>
@@ -168,7 +188,7 @@ const EditForm = ({
                 type="checkbox"
                 id="active"
                 name="active"
-                checked={formData.active || false}
+                checked={initialValues.active || false}
                 onChange={(e) =>
                   setFormData({ ...formData, active: e.target.checked })
                 }

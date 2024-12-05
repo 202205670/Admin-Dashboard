@@ -26,12 +26,13 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
       const response = await axiosInstance.get("/admin/employee");
       console.log(response.data?.employees);
       const transformedData = response.data?.employees.map(employee => ({
+        id: employee?.id,
         email: employee?.email,
         firstName: employee?.firstName,
         lastName: employee?.lastName,
         branch: employee?.branch.name,
         address: employee?.address?.city || "N/A",
-        status: employee.user.statusId === 1 ? "Active" : "Not Active"
+        status: employee.statusId === 1 ? "Active" : "Not Active"
       }));
       setEmployeeData(transformedData);
       console.log(response.data?.employees);
