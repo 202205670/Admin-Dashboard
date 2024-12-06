@@ -77,38 +77,52 @@
   justify-content: space-between;
   width: 100%; /* Update to 100% to fit container */
   padding-left: 10px;
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 10px;
   flex-direction: row;
 }
 
 .profileIcon {
-  background-color: #ddd;
-  padding: 10px;
-  border-radius: 50%;
-  margin-bottom: 5px;
-  font-size: 24px;
-  margin-top: 15px;
+border:black 1px solid;
+background: #EBEEEE;
+
+  padding: 10px;          
+  border-radius: 50%;     
+    
+  margin-top: 15px;       
+  font-size: 24px;       
+  width: 25px;            
+  height: 25px;           
+  display: flex;        
+  justify-content: center;
+  align-items: center;  
+
 }
 
 .profileInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 30px;
-  padding: 0px;
+  display: flex;           /* Align items in a flexible box layout */
+  flex-direction: column;  /* Stack items vertically */
+  align-items: flex-start; /* Align items to the start (left) */
+  margin-right: 300px;     /* Space to the right of the profile info */
+  padding: 0; 
+  margin-top: 15px;
+            /* Ensure no padding within the container */
 }
 
 .profileName {
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
+  font-size: 17px;         /* Adjust font size for the name */
+  font-weight: 500;        /* Medium font weight */
+  color: #333;             /* Dark grey color */
+  margin: 0;  
+  margin-left: 15px;             /* Remove default margins */
 }
 
 .profileEmail {
-  font-size: 12px;
-  color: #888;
+  font-size: 14px;         /* Smaller font size for email */
+  color: #888;             /* Light grey color for email text */
+  margin-left: 15px;               /* Remove default margins */
 }
+
 
 .sidebarMenu {
   width: 100%; /* Ensure it fits the width of the sidebar */
@@ -124,10 +138,11 @@
 .sidebarListItem {
   display: flex;
   align-items: center;
-  padding: 12px;
-  font-size: 16px;
+  padding: 13px;
+  font-size: 19px;
   font-weight: 500;
-  color: #555;
+  color:  #696A6A;
+  ;
   cursor: pointer;
   border-radius: 8px;
   transition: background-color 0.3s ease;
@@ -135,25 +150,27 @@
 }
 
 .sidebarListItem.active {
-  margin-top: 5px;
-  height: 20px;
+  margin: 5px;
+
+  height: 15px;
   background-color: black;
   color: white;
 }
 
 .sidebarListItem span {
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 .sidebarIcon {
-  font-size: 20px;
+  font-size: 15px;
   color: inherit;
 }
 
 .sidebarListItem:hover {
-  background-color: black;
+  background-color:gray;
   color: white;
-
+  height: 15px;
+  margin: 10px;
   
 }
 

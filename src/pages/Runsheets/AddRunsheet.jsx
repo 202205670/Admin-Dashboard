@@ -50,7 +50,8 @@ const AddRunsheet = () => {
 
 
   const runsheetFields = [
-    { label: "Driver", type: "select", name: "driverId", options: driverOptions },
+   { label: "Driver", type: "select", name: "driverId", options: driverOptions },
+  // { label: "Driver", type: "text", name: "driverId" },
     { label: "Vehicle", type: "select", name: "vehicleId", options: vehicleOptions },
     { label: "CHEP Account", type: "text", name: "chepAccount" },
     { label: "LOSCAN Account", type: "text", name: "loscanAccount" },
@@ -81,7 +82,7 @@ const AddRunsheet = () => {
   return (
     <PageWrapper showAddButton={false}>
       <AddForm
-        title="Add Runsheet"
+        title="Create New Runsheet "
         fields={runsheetFields}
         // secondTitle="Assign Consignment"
         onSubmit={handleAddRunsheet}

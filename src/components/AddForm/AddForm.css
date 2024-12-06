@@ -19,8 +19,9 @@
     text-align: left;
     font-size: 24px;
     font-weight: 500;
-    font-family: bold;
-    padding-left: 15px;
+    font-family:bold;
+    padding-left: 15px; 
+
 
   }
   
@@ -115,6 +116,7 @@
   .create-btn {
     background: #1F2937;
     color: white;
+  
   }
   .assign-btn{
     background: #1F2937;

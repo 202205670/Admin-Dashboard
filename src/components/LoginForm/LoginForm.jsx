@@ -58,7 +58,7 @@ const LoginForm = ({ setIsAuthenticated }) => {
     <div className="LoginForm_login">
       <div className="loginFormContainer_login">
         <h2 className="loginHeader_login">
-          Log<span style={{ color: "#d4af37" }}>in</span> to your Account
+        <span style={{ color: "#d4af37" }}>Log</span>in to your Account
         </h2>
         {error && <div className="error_login">{error}</div>}
         <form className="loginFormForm_login" onSubmit={handleSubmit}>
