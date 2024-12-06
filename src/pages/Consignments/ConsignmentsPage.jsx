@@ -11,6 +11,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState("");
   const [consignmentsData, setConsignmentsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Calculate active and inactive counts
   const { activeCount, inactiveCount } = useStatusCount(consignmentsData);
@@ -43,6 +44,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
         type: consignment.typeId === 1 ? "Pick-Up" : "Delivery"
       }));
       setConsignmentsData(transformedData);
+      setLoading(false)
     };
 
     fetchData();
@@ -79,6 +81,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
           "type",
         ]}
         data={consignmentsData}
+        loading={loading}
         editPageUrl="/edit-consignment"
         pageSpecificIcons={faTruck}
       />

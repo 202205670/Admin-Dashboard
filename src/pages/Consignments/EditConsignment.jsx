@@ -12,6 +12,8 @@ const EditConsignment = () => {
   const [sourceOptions, setSourceOptions] = useState([]);
   const [destinationOptions, setDestinationOptions] = useState([]);
   const [consignmentData, setConsignmentData] = useState(null);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchConsignmentData = async () => {
@@ -128,6 +130,7 @@ const EditConsignment = () => {
 
     try {
       await axiosInstance.put(`/admin/consignment/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/consignments"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -156,6 +159,8 @@ const EditConsignment = () => {
           onSubmit={handleSubmit}
           onCancel={handleCancel} // Pass handleCancel function
           initialData={{}} // No initial data is provided, as requested
+          setIsSubmitting={setIsSubmitting}
+          isSubmitting={isSubmitting}
         />
       )}
     </PageWrapper>

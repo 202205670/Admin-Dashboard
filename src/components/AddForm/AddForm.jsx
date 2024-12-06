@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './AddForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../Spinner/Spinner';
 
 const AddForm = ({
   title,
@@ -17,6 +18,8 @@ const AddForm = ({
   onAssignConsignment,
   onDeleteConsignment,
   isAddRunsheetPage, // New prop for conditionally showing the Assign button
+  isSubmitting,
+  setIsSubmitting
 }) => {
   const [formData, setFormData] = useState(
     fields.concat(secondFields).reduce((acc, field) => {
@@ -51,6 +54,7 @@ const AddForm = ({
   };
 
   const handleSubmit = (e) => {
+    setIsSubmitting(true)
     e.preventDefault();
     onSubmit(formData);
   };
@@ -239,7 +243,7 @@ const AddForm = ({
             Cancel
           </button>
           <button type="submit" className="form-btn create-btn">
-            Create
+            {isSubmitting ? <Spinner size='20px' /> : "Create"}
           </button>
         </div>
       </form>

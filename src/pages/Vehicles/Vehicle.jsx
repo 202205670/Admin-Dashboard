@@ -14,6 +14,8 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   const [vehiclesData, setVehiclesData] = useState([
     // Sample data for vehicles - replace with actual data source
   ]);
+  const [loading, setLoading] = useState(true);
+
 
   // Calculate active and inactive counts
   const { activeCount, inactiveCount } = useStatusCount(vehiclesData);
@@ -35,6 +37,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
         status: vehicle.statusId === 1 ? "Active" : "Not Active"
       }));
       setVehiclesData(transformedData);
+      setLoading(false)
     };
 
     fetchData();
@@ -65,6 +68,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
         columns={["id", "plateNumber", "branchName",  "vehicleTypeName","status"]}
         data={vehiclesData}
         editPageUrl="/edit-vehicle"
+        loading={loading}
         pageSpecificIcons={faTruck}
       />
     </PageWrapper>

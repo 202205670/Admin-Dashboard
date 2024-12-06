@@ -9,6 +9,8 @@ const EditBranch = () => {
   const { id } = useParams(); // Get branch ID from URL parameters
   const [branchData, setBranchData] = useState(null);
   const [addressOptions, setAddressOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchBranchData = async () => {
@@ -55,6 +57,7 @@ const EditBranch = () => {
   const handleSubmit = async (formData) => {
     try {
       await axiosInstance.put(`/admin/branch/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/branches"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -81,6 +84,8 @@ const EditBranch = () => {
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
         initialData={{}} // No initial data is provided, as requested
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
       />}
      
     </PageWrapper>

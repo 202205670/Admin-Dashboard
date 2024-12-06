@@ -8,6 +8,8 @@ import axiosInstance from "../../server/axios.instance"; // Replace with your ax
 const AddBranch = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [addressOptions, setAddressOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -40,6 +42,7 @@ const AddBranch = () => {
   const handleSubmit = async (formData) => {
     try {
       const response = await axiosInstance.post("/admin/branch", formData); // Adjust endpoint if needed
+      setIsSubmitting(false)
         navigate("/branches"); // Navigate to Branch List page
       
     } catch (error) {
@@ -63,7 +66,8 @@ const AddBranch = () => {
       <AddForm 
         title={title}
         fields={branchFields}
-      
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
       />

@@ -9,6 +9,7 @@ const AddDriver = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [branchOptions, setBranchOptions] = useState([]);
   const [addressOptions, setAddressOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -74,7 +75,7 @@ const AddDriver = () => {
         password: "12345678910"
       };
       const response = await axiosInstance.post("/auth/register", payload); // Adjust endpoint if needed
-     
+      setIsSubmitting(false)
         navigate("/drivers"); // Redirect to driver list
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -96,7 +97,8 @@ const AddDriver = () => {
       <AddForm 
         title={title}
         fields={driverFields}
-       
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
         statusLabel="Active" 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function

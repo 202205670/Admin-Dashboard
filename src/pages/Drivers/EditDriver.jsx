@@ -10,6 +10,8 @@ const EditDriver = () => {
   const [branchOptions, setBranchOptions] = useState([]);
   const [addressOptions, setAddressOptions] = useState([]);
   const [driverData, setDriverData] = useState(null);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchDriverData = async () => {
@@ -89,6 +91,7 @@ const EditDriver = () => {
   const handleSubmit = async (formData) => {
     try {
       await axiosInstance.put(`/admin/drivers/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/drivers"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -114,6 +117,8 @@ const EditDriver = () => {
         statusLabel="Active" 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
       /> }
     
     </PageWrapper>

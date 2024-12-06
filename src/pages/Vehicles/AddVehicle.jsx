@@ -8,6 +8,8 @@ const AddVehicle = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [branchOptions, setBranchOptions] = useState([]);
   const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -62,7 +64,7 @@ const AddVehicle = () => {
   const handleSubmit = async (formData) => {
     try {
       await axiosInstance.post("/admin/vehicle", formData);
-
+setIsSubmitting(false)
       navigate("/vehicles");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -86,6 +88,8 @@ const AddVehicle = () => {
         title={title}
         fields={vehicleFields}
         statusLabel="Active"
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
         onCancel={handleCancel} // Pass handleCancel function
       />

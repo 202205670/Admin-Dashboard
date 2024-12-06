@@ -10,6 +10,8 @@
     const [runsheetOptions, setRunsheetOptions] = useState([]);
     const [sourceOptions, setSourceOptions] = useState([]);
     const [destinationOptions, setDestinationOptions] = useState([]);
+    const [isSubmitting,setIsSubmitting] = useState(false)
+
 
     useEffect(() => {
       const fetchOptions = async () => {
@@ -73,6 +75,7 @@
         console.log(formData)
         const response = await axiosInstance.post("/admin/consignment", formData);
         console.log("Consignment created:", response.data);
+        setIsSubmitting(false)
         navigate("/consignments");
       } catch (error) {
         console.error("Error creating consignment:", error);
@@ -98,6 +101,8 @@
           statusLabel="Active" 
           onSubmit={handleSubmit}
           onCancel={handleCancel}  // Pass handleCancel function
+          setIsSubmitting={setIsSubmitting}
+          isSubmitting={isSubmitting}
         />
       </PageWrapper>
     );

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./TableComponent.css";
+import Spinner from "../Spinner/Spinner";
 
 const TableComponent = ({
   columns,
@@ -11,6 +12,7 @@ const TableComponent = ({
   pageSpecificIcons,
   isRunsheetPage,
   onRowClick,
+  loading
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -42,7 +44,9 @@ const TableComponent = ({
 
   return (
     <div className="table-container">
-      <table className="custom-table">
+      {loading ? <Spinner /> : 
+      <>
+       <table className="custom-table">
         <thead>
           <tr>
             <th>{getColumnLabel(columns[0])}</th>{" "}
@@ -109,6 +113,8 @@ const TableComponent = ({
           </button>
         ))}
       </div>
+      </>}
+     
     </div>
   );
 };

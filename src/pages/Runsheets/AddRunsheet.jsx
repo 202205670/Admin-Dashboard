@@ -10,6 +10,8 @@ const AddRunsheet = () => {
   const [branchOptions, setBranchOptions] = useState([]);
   const [driverOptions, setDriverOptions] = useState([]);
   const [vehicleOptions, setVehicleOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
     // Fetch options for Driver, Vehicle, and Branch from the backend
     useEffect(() => {
@@ -68,6 +70,7 @@ const AddRunsheet = () => {
     try {
       const response = await axiosInstance.post("/admin/runsheet", formData);
       console.log("Runsheet created:", response.data);
+      setIsSubmitting(false)
       navigate("/runsheets");
     } catch (error) {
       console.error("Error creating runsheet:", error);
@@ -83,6 +86,8 @@ const AddRunsheet = () => {
         // secondTitle="Assign Consignment"
         onSubmit={handleAddRunsheet}
         onCancel={() => navigate("/runsheets")}
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
         // showTable={true}
         // isAddRunsheetPage={true}
       />

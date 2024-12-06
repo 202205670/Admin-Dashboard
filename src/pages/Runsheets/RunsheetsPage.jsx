@@ -11,6 +11,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
   const [runsheetsData, setRunsheetsData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // const activeCount = runsheetsData.filter(item => item.status === "Open").length;
   // const inactiveCount = runsheetsData.filter(item => item.status === "Closed").length;
@@ -49,6 +50,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       }));
       
       setRunsheetsData(transformedData);
+      setLoading(false)
     };
 
     fetchData();
@@ -92,6 +94,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
         ]}
         data={runsheetsData}
         editPageUrl="/edit-runsheet"
+        loading={loading}
         pageSpecificIcons={faFileExcel}
         isRunsheetPage={true}
         onRowClick={handleRowClick}

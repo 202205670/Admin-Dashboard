@@ -12,6 +12,8 @@ const EditRunsheetPage = () => {
   const [driverOptions, setDriverOptions] = useState([]);
   const [vehicleOptions, setVehicleOptions] = useState([]);
   const [runsheetData, setRunsheetData] = useState(null);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
     // Fetch options for Driver, Vehicle, and Branch from the backend
     useEffect(() => {
@@ -87,6 +89,7 @@ const EditRunsheetPage = () => {
 
     try {
       await axiosInstance.put(`/admin/runsheet/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/runsheets"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -108,6 +111,8 @@ const EditRunsheetPage = () => {
       initialValues={runsheetData}
       onSubmit={handleFormSubmit}
       onCancel={handleFormCancel}
+      setIsSubmitting={setIsSubmitting}
+      isSubmitting={isSubmitting}
     />}
     </PageWrapper>
   );
