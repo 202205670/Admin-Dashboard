@@ -12,6 +12,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
   const [employeeData, setEmployeeData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { activeCount, inactiveCount } = useStatusCount(employeeData);
 
@@ -35,7 +36,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
         status: employee.statusId === 1 ? "Active" : "Not Active"
       }));
       setEmployeeData(transformedData);
-      console.log(response.data?.employees);
+      setLoading(false)
     };
 
     fetchData();
@@ -72,6 +73,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
           "status"
         ]}
         data={employeeData}
+        loading={loading}
         editPageUrl="/edit-employee"
         pageSpecificIcons={faUser}
       />

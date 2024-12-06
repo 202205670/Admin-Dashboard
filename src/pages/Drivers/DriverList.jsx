@@ -5,13 +5,14 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this is correctly imported
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
 import axiosInstance from "../../server/axios.instance";
+import Spinner from "../../components/Spinner/Spinner";
 
 const DriversPage = ({ updateDriverCount, showRecords }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [driversData, setDriversData] = useState([]);
 
   // Calculate active and inactive counts
@@ -26,7 +27,6 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/drivers");
-      console.log(response.data?.drivers);
       const transformedData = response.data?.drivers.map(driver => ({
         id: driver?.id,
         email: driver?.email,
@@ -38,6 +38,7 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
         status: driver.statusId === 1 ? "Active" : "Not Active"
       }));
       setDriversData(transformedData);
+      setLoading(false)
     };
 
     fetchData();
@@ -45,8 +46,6 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
-
-  if (loading) return <div>Loading...</div>;
 
   // If showRecords is true, render the driver records and UI
   return (
@@ -78,9 +77,11 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
           "status"
         ]}
         data={driversData}
+        loading={loading}
         editPageUrl="/edit-driver"
         pageSpecificIcons={faUser}
       />
+      
     </PageWrapper>
   );
 };

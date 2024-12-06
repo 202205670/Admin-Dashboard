@@ -6,11 +6,14 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import "./BranchesPage.css";
 import axiosInstance from "../../server/axios.instance";
+import Spinner from "../../components/Spinner/Spinner";
 
 const BranchesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const [branchesData, setBranchesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
 
   const handleSearch = (value) => {
     setSearchTerm(value);
@@ -24,8 +27,8 @@ const BranchesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/branch");
-      console.log(response.data.branches)
       setBranchesData(response.data?.branches);
+      setLoading(false)
     };
 
     fetchData();
@@ -42,7 +45,7 @@ const BranchesPage = () => {
       onSearch={handleSearch}
     >
       <div className="branches-container">
-        {filteredBranches?.map((branch) => (
+        {loading ? <Spinner /> :filteredBranches?.map((branch) => (
           <div className="branch-card" key={branch?.id}>
             <div className="branch-info">
               <h3>{branch?.name}</h3>
@@ -62,7 +65,7 @@ const BranchesPage = () => {
               <FontAwesomeIcon icon={faEdit} />
             </div>
           </div>
-        ))}
+        )) }
       </div>
     </PageWrapper>
   );

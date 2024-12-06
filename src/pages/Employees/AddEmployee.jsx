@@ -9,6 +9,7 @@ const AddEmployee = () => {
   
   const [branchOptions, setBranchOptions] = useState([]);
   const [addressOptions, setAddressOptions] = useState([]);
+  const [isSubmitting,setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const fetchBranches = async () => {
@@ -73,7 +74,7 @@ const AddEmployee = () => {
         password: "12345678910"
       };
       const response = await axiosInstance.post("/auth/register", payload); // Adjust endpoint if needed
-     
+     setIsSubmitting(false)
         navigate("/employees"); // Redirect to driver list
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -95,6 +96,8 @@ const AddEmployee = () => {
       <AddForm 
         title={title}
         fields={employeeFields}  
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
         statusLabel="Active" 
         onSubmit={handleSubmit}
         onCancel={handleCancel}  

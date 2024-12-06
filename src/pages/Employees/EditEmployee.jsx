@@ -11,6 +11,8 @@ const EditEmployee = () => {
   const [branchOptions, setBranchOptions] = useState([]);
   const [addressOptions, setAddressOptions] = useState([]);
   const [employeeData, setEmployeeData] = useState(null);
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   const employeeFields = [
     { label: "Username", type: "text", name: "username" },
@@ -90,6 +92,7 @@ const EditEmployee = () => {
   const handleSubmit = async (formData) => {
     try {
       await axiosInstance.put(`/admin/employee/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/employees"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -116,6 +119,8 @@ const EditEmployee = () => {
         initialValues={employeeData}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
       />}
      
     </PageWrapper>

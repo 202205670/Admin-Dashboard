@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './EditForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../Spinner/Spinner';
 
 const EditForm = ({
   title,
@@ -18,6 +19,8 @@ const EditForm = ({
   onDeleteConsignment,
   isEditRunsheetPage,
   initialValues = {},
+  isSubmitting,
+  setIsSubmitting
 }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
@@ -58,6 +61,7 @@ const EditForm = ({
 
   // Form submit handler for main form
   const handleSubmit = (e) => {
+    setIsSubmitting(true)
     e.preventDefault();
     onSubmit(formData);
   };
@@ -236,7 +240,7 @@ const EditForm = ({
             Cancel
           </button>
           <button type="submit" className="form-btn save-btn">
-            Save
+          {isSubmitting ? <Spinner size='20px' /> : "Save"}
           </button>
         </div>
       </form>

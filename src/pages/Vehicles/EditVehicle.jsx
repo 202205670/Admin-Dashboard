@@ -10,7 +10,8 @@ const EditVehicle = () => {
   const [branchOptions, setBranchOptions] = useState([]);
   const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
   const [vehicleData, setVehicleData] = useState(null);
- 
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
 
   useEffect(() => {
     const fetchVehicleData = async () => {
@@ -82,6 +83,7 @@ const EditVehicle = () => {
 
     try {
       await axiosInstance.put(`/admin/vehicle/${id}`, formData);
+      setIsSubmitting(false)
       navigate("/vehicles"); // Redirect to the Driver List page
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -109,6 +111,8 @@ const EditVehicle = () => {
         onSubmit={handleSubmit}
         onCancel={handleCancel}  // Pass handleCancel function
         initialData={{}} // No initial data is provided, as requested
+        setIsSubmitting={setIsSubmitting}
+        isSubmitting={isSubmitting}
       />}
       
     </PageWrapper>
