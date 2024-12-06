@@ -61,6 +61,11 @@
       { label: "Consignment Type", type: "select", name: "typeId", options: [{label:"Delivery",value:1}, {label:"Pickup",value:2}] },
       { label: "Description", type: "textarea", name: "description" },
       { label: "Priority", type: "number", name: "priority" },
+      {
+        label: "Status",
+        type: "checkbox",
+        name: "active",
+      },
     ];
 
     const handleSubmit = async (formData) => {
@@ -91,7 +96,6 @@
           title={title}
           fields={consignmentFields}
           statusLabel="Active" 
-          showStatusCheckbox={true} 
           onSubmit={handleSubmit}
           onCancel={handleCancel}  // Pass handleCancel function
         />

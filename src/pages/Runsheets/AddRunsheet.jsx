@@ -46,11 +46,6 @@ const AddRunsheet = () => {
       fetchOptions();
     }, []);
 
-  // Initialize consignments with two default records
-  const [consignments, setConsignments] = useState([
-    { consignmentNumber: "12345", type: "Delivery", priority: "1" },
-    { consignmentNumber: "67890", type: "Pickup", priority: "2" },
-  ]);
 
   const runsheetFields = [
     { label: "Driver", type: "select", name: "driverId", options: driverOptions },
@@ -58,13 +53,17 @@ const AddRunsheet = () => {
     { label: "CHEP Account", type: "text", name: "chepAccount" },
     { label: "LOSCAN Account", type: "text", name: "loscanAccount" },
     { label: "Branch", type: "select", name: "branchId", options: branchOptions },
+    {
+      label: "Status",
+      type: "checkbox",
+      name: "active",
+    },
   ];
 
 
   const handleAddRunsheet = async (data) => {
     const formData = {
       ...data,
-      statusId: 1
     }
     try {
       const response = await axiosInstance.post("/admin/runsheet", formData);
