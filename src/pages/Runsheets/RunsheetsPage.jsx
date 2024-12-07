@@ -4,6 +4,7 @@ import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent";
 import axiosInstance from "../../server/axios.instance";
+import useStatusCount from "../../hooks/useStatusCount";
 
 const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const navigate = useNavigate();
@@ -13,14 +14,13 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const [runsheetsData, setRunsheetsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // const activeCount = runsheetsData.filter(item => item.status === "Open").length;
-  // const inactiveCount = runsheetsData.filter(item => item.status === "Closed").length;
+  const { activeCount, inactiveCount } = useStatusCount(runsheetsData);
 
   useEffect(() => {
     if (typeof updateRunsheetCount === "function") {
       updateRunsheetCount({
-        active: runsheetsData.length,
-        inactive: runsheetsData.length,
+        active: activeCount,
+        inactive: inactiveCount,
       });
     }
   }, [updateRunsheetCount, runsheetsData]);
@@ -28,29 +28,42 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/runsheet");
-      console.log(response.data?.runsheets);
-      const transformedData = response.data?.runsheets.map(runsheet => ({
+      const transformedData = response.data?.runsheets.map((runsheet) => ({
         id: runsheet.id,
         status: runsheet.statusId === 1 ? "Active" : "Not Active",
         branchName: runsheet.branch.name,
-        driverName: `${runsheet.driver?.firstName || "Unknown"} ${runsheet.driver?.lastName || "Unknown"}`,
+        driverName: `${runsheet.driver?.firstName || "Unknown"} ${
+          runsheet.driver?.lastName || "Unknown"
+        }`,
         vehicle: runsheet.vehicle?.plateNumber || "Unknown Vehicle",
         startTime: runsheet.vehicle?.startTime
-          ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
-          : "N/A", // Fallback for missing startTime
+          ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString(
+              "en-GB"
+            )} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString(
+              "en-US",
+              { hour: "2-digit", minute: "2-digit", hour12: false }
+            )}`
+          : "-", // Fallback for missing startTime
         finishTime: runsheet.vehicle?.finishTime
-        ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
-
-          : `${new Date().toLocaleDateString("en-GB")} ${new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`, // Current date as fallback for finishTime
+          ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString(
+              "en-GB"
+            )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
+              "en-US",
+              { hour: "2-digit", minute: "2-digit", hour12: false }
+            )}`
+          : "-", // Current date as fallback for finishTime
         restTime: runsheet.vehicle?.restTime
-        ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString("en-GB")} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
-
-          : `${new Date().toLocaleDateString("en-GB")} ${new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`, // Current date as fallback for finishTime
-        
+          ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString(
+              "en-GB"
+            )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
+              "en-US",
+              { hour: "2-digit", minute: "2-digit", hour12: false }
+            )}`
+          : "-", // Current date as fallback for finishTime
       }));
-      
+
       setRunsheetsData(transformedData);
-      setLoading(false)
+      setLoading(false);
     };
 
     fetchData();
@@ -62,6 +75,17 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
   const handleRowClick = (id) => {
     navigate(`/runsheetDetailPage/${id}`);
   };
+
+  const filteredRunsheets = runsheetsData.filter((runsheet) => {
+    const matchesSearch = searchTerm
+      ? runsheet.id.toString().includes(searchTerm)
+      : true;
+
+    const matchesStatus =
+      status === "Reset" || !status ? true : runsheet.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <PageWrapper
@@ -78,7 +102,7 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       onSearch={(value) => setSearchTerm(value)}
       onBranchChange={(value) => setBranch(value)}
       onStatusChange={(value) => setStatus(value)}
-      statusOptions={["Open", "Closed"]}
+      statusOptions={["Reset", "Open", "Closed"]}
       isRunsheetPage={true}
     >
       <TableComponent
@@ -90,9 +114,9 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
           "startTime",
           "finishTime",
           "restTime",
-          "status"
+          "status",
         ]}
-        data={runsheetsData}
+        data={filteredRunsheets}
         editPageUrl="/edit-runsheet"
         loading={loading}
         pageSpecificIcons={faFileExcel}

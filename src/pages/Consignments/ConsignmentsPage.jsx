@@ -25,26 +25,39 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/consignment");
-      console.log(response.data?.consignments);
-      const transformedData = response.data?.consignments.map(consignment => ({
-        id: consignment?.id,
-        consignmentNo: consignment.consignmentNo,
-        customer: consignment.customer.name,
-        runsheet: consignment.runsheet.id,
-        source: consignment.source.city,
-        destination: consignment.destination.city,
-        timeIn: consignment.timeIn
-          ? `${new Date(consignment.timeIn).toLocaleDateString("en-GB")} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
-          : "N/A", // Fallback for missing timein
-        timeOut: consignment.timeOut
-        ? `${new Date(consignment.timeOut).toLocaleDateString("en-GB")} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false })}`
-        : "N/A",
-        priority: consignment.priority,
-        status: consignment.statusId === 1 ? "Active" : "Not Active",
-        type: consignment.typeId === 1 ? "Pick-Up" : "Delivery"
-      }));
+      const transformedData = response.data?.consignments.map(
+        (consignment) => ({
+          id: consignment?.id,
+          consignmentNo: consignment.consignmentNo,
+          customer: consignment.customer.name,
+          runsheet: consignment.runsheet.id,
+          source: consignment.source.city,
+          destination: consignment.destination.city,
+          timeIn: consignment.timeIn
+            ? `${new Date(consignment.timeIn).toLocaleDateString(
+                "en-GB"
+              )} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })}`
+            : "-", // Fallback for missing timein
+          timeOut: consignment.timeOut
+            ? `${new Date(consignment.timeOut).toLocaleDateString(
+                "en-GB"
+              )} ${new Date(consignment.timeIn).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })}`
+            : "-",
+          priority: consignment.priority,
+          status: consignment.statusId === 1 ? "Active" : "Not Active",
+          type: consignment.typeId === 1 ? "Pick-Up" : "Delivery",
+        })
+      );
       setConsignmentsData(transformedData);
-      setLoading(false)
+      setLoading(false);
     };
 
     fetchData();
@@ -52,6 +65,20 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
+
+  const filteredConsignments = consignmentsData.filter((consignment) => {
+    const matchesSearch = searchTerm
+      ? consignment.consignmentNo
+          .toString()
+          .toLowerCase()
+          .includes(searchTerm?.toLowerCase())
+      : true;
+
+    const matchesStatus =
+      status === "Reset" || !status ? true : consignment.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
 
   // If showRecords is true, render the consignment records and UI
   return (
@@ -64,7 +91,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
       showAddButton={true}
       onSearch={(value) => setSearchTerm(value)}
       onStatusChange={(value) => setStatus(value)}
-      statusOptions={["Active", "Not Active"]}
+      statusOptions={["Reset", "Active", "Not Active"]}
     >
       <TableComponent
         columns={[
@@ -80,7 +107,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
           "status",
           "type",
         ]}
-        data={consignmentsData}
+        data={filteredConsignments}
         loading={loading}
         editPageUrl="/edit-consignment"
         pageSpecificIcons={faTruck}

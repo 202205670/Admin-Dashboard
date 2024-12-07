@@ -16,7 +16,6 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   ]);
   const [loading, setLoading] = useState(true);
 
-
   // Calculate active and inactive counts
   const { activeCount, inactiveCount } = useStatusCount(vehiclesData);
 
@@ -29,15 +28,15 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/vehicle");
-      const transformedData = response.data?.vehicles.map(vehicle => ({
+      const transformedData = response.data?.vehicles.map((vehicle) => ({
         id: vehicle?.id,
         plateNumber: vehicle.plateNumber,
-        branchName: vehicle.branch?.name ,
+        branchName: vehicle.branch?.name,
         vehicleTypeName: vehicle.vehicleType?.name,
-        status: vehicle.statusId === 1 ? "Active" : "Not Active"
+        status: vehicle.statusId === 1 ? "Active" : "Not Active",
       }));
       setVehiclesData(transformedData);
-      setLoading(false)
+      setLoading(false);
     };
 
     fetchData();
@@ -45,6 +44,20 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
+
+  const filteredVehicles = vehiclesData.filter((vehicle) => {
+    const matchesSearch = searchTerm
+      ? vehicle.plateNumber
+          .toString()
+          .toLowerCase()
+          .includes(searchTerm?.toLowerCase())
+      : true;
+
+    const matchesStatus =
+      status === "Reset" || !status ? true : vehicle.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
 
   // If showRecords is true, render the vehicle records and UI
   return (
@@ -62,11 +75,17 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       onSearch={(value) => setSearchTerm(value)}
       onBranchChange={(value) => setBranch(value)}
       onStatusChange={(value) => setStatus(value)}
-      statusOptions={["Active", "Not Active"]}
+      statusOptions={["Reset", "Active", "Not Active"]}
     >
       <TableComponent
-        columns={["id", "plateNumber", "branchName",  "vehicleTypeName","status"]}
-        data={vehiclesData}
+        columns={[
+          "id",
+          "plateNumber",
+          "branchName",
+          "vehicleTypeName",
+          "status",
+        ]}
+        data={filteredVehicles}
         editPageUrl="/edit-vehicle"
         loading={loading}
         pageSpecificIcons={faTruck}

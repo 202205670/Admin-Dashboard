@@ -25,24 +25,34 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/employee");
-      console.log(response.data?.employees);
-      const transformedData = response.data?.employees.map(employee => ({
+      const transformedData = response.data?.employees.map((employee) => ({
         id: employee?.id,
         email: employee?.email,
         firstName: employee?.firstName,
         lastName: employee?.lastName,
         branch: employee?.branch.name,
-        address: employee?.address?.city || "N/A",
-        status: employee.statusId === 1 ? "Active" : "Not Active"
+        address: employee?.address?.city || "-",
+        status: employee.statusId === 1 ? "Active" : "Not Active",
       }));
       setEmployeeData(transformedData);
-      setLoading(false)
+      setLoading(false);
     };
 
     fetchData();
   }, []);
 
   if (showRecords) return null;
+
+  const filteredEmployees = employeeData.filter((employee) => {
+    const matchesSearch = searchTerm
+      ? employee.firstName.toLowerCase().includes(searchTerm)
+      : true;
+
+    const matchesStatus =
+      status === "Reset" || !status ? true : employee.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <PageWrapper
@@ -59,7 +69,7 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
       onSearch={(value) => setSearchTerm(value)}
       onBranchChange={(value) => setBranch(value)}
       onStatusChange={(value) => setStatus(value)}
-      statusOptions={["Active", "Not Active"]}
+      statusOptions={["Reset", "Active", "Not Active"]}
     >
       <TableComponent
         columns={[
@@ -70,9 +80,9 @@ const EmployeesPage = ({ updateEmployeeCount, showRecords }) => {
           "lastName",
           "branch",
           "address",
-          "status"
+          "status",
         ]}
-        data={employeeData}
+        data={filteredEmployees}
         loading={loading}
         editPageUrl="/edit-employee"
         pageSpecificIcons={faUser}

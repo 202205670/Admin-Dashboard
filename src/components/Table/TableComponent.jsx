@@ -12,7 +12,7 @@ const TableComponent = ({
   pageSpecificIcons,
   isRunsheetPage,
   onRowClick,
-  loading
+  loading,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -44,77 +44,84 @@ const TableComponent = ({
 
   return (
     <div className="table-container">
-      {loading ? <Spinner /> : 
-      <>
-       <table className="custom-table">
-        <thead>
-          <tr>
-            <th>{getColumnLabel(columns[0])}</th>{" "}
-            {/* Icon + first column header */}
-            {columns.slice(1).map((column, index) => (
-              <th key={index + 1}>{getColumnLabel(column)}</th>
-            ))}
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentData?.length > 0 ? (
-            currentData?.map((row, index) => (
-              <tr
-                key={index}
-                onClick={isRunsheetPage ? () => onRowClick(row.id) : undefined} // Row click event only on Runsheet page
-              >
-                <td className="icon-cell">
-                  {pageSpecificIcons && (
-                    <FontAwesomeIcon
-                      icon={pageSpecificIcons}
-                      className="row-icon"
-                    />
-                  )}
-                  {row[getColumnKey(columns[0])] || "Null"}{" "}
-                  {/* Default value if undefined */}
-                </td>
-                {columns.slice(1).map((column, colIndex) => (
-                  <td key={colIndex + 1}>
-                    {row[getColumnKey(column)] || "Null"}
-                  </td> // Default value if undefined
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <table className="custom-table">
+            <thead>
+              <tr>
+                <th>{getColumnLabel(columns[0])}</th>{" "}
+                {/* Icon + first column header */}
+                {columns.slice(1).map((column, index) => (
+                  <th key={index + 1}>{getColumnLabel(column)}</th>
                 ))}
-                <td>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent row click when editing
-                      navigate(`${editPageUrl}/${row.id}`);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faEdit} className="edit-icon" />
-                  </button>
-                </td>
+                <th>Edit</th>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={columns.length + 1} style={{ textAlign: "center" }}>
-                No data available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {currentData?.length > 0 ? (
+                currentData?.map((row, index) => (
+                  <tr
+                    key={index}
+                    onClick={
+                      isRunsheetPage ? () => onRowClick(row.id) : undefined
+                    } // Row click event only on Runsheet page
+                  >
+                    <td className="icon-cell">
+                      {pageSpecificIcons && (
+                        <FontAwesomeIcon
+                          icon={pageSpecificIcons}
+                          className="row-icon"
+                        />
+                      )}
+                      {row[getColumnKey(columns[0])] || "-"}{" "}
+                      {/* Default value if undefined */}
+                    </td>
+                    {columns.slice(1).map((column, colIndex) => (
+                      <td key={colIndex + 1}>
+                        {row[getColumnKey(column)] || "-"}
+                      </td> // Default value if undefined
+                    ))}
+                    <td>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent row click when editing
+                          navigate(`${editPageUrl}/${row.id}`);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} className="edit-icon" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={columns.length + 1}
+                    style={{ textAlign: "center" }}
+                  >
+                    No data available
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-      {/* Pagination Controls */}
-      <div className="pagination">
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => handlePageChange(number)}
-            className={currentPage === number ? "active" : ""}
-          >
-            {number}
-          </button>
-        ))}
-      </div>
-      </>}
-     
+          {/* Pagination Controls */}
+          <div className="pagination">
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                onClick={() => handlePageChange(number)}
+                className={currentPage === number ? "active" : ""}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

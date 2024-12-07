@@ -27,18 +27,18 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/drivers");
-      const transformedData = response.data?.drivers.map(driver => ({
+      const transformedData = response.data?.drivers.map((driver) => ({
         id: driver?.id,
         email: driver?.email,
         firstName: driver?.firstName,
         lastName: driver?.lastName,
         branch: driver?.branch.name,
         phoneNumber: driver?.phoneNumber,
-        address: driver?.address?.city || "N/A",
-        status: driver.statusId === 1 ? "Active" : "Not Active"
+        address: driver?.address?.city || "-",
+        status: driver.statusId === 1 ? "Active" : "Not Active",
       }));
       setDriversData(transformedData);
-      setLoading(false)
+      setLoading(false);
     };
 
     fetchData();
@@ -46,6 +46,17 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
 
   // Return nothing if showRecords is false
   if (showRecords) return null;
+
+  const filteredDrivers = driversData.filter((driver) => {
+    const matchesSearch = searchTerm
+      ? driver.firstName.toLowerCase().includes(searchTerm)
+      : true;
+
+    const matchesStatus =
+      status === "Reset" || !status ? true : driver.status === status;
+
+    return matchesSearch && matchesStatus;
+  });
 
   // If showRecords is true, render the driver records and UI
   return (
@@ -63,6 +74,7 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
       onSearch={(value) => setSearchTerm(value)}
       onBranchChange={(value) => setBranch(value)}
       onStatusChange={(value) => setStatus(value)}
+      statusOptions={["Reset", "Active", "Not Active"]}
     >
       <TableComponent
         columns={[
@@ -74,14 +86,13 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
           "branch",
           "phoneNumber",
           "address",
-          "status"
+          "status",
         ]}
-        data={driversData}
+        data={filteredDrivers}
         loading={loading}
         editPageUrl="/edit-driver"
         pageSpecificIcons={faUser}
       />
-      
     </PageWrapper>
   );
 };
