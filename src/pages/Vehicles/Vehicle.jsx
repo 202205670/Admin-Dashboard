@@ -52,7 +52,7 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
       title="Vehicles"
       filters={["search", "branch", "status"]}
       placeholders={{
-        search: "Search by Vehicle #",
+        search: "Search by plate Number ",
         branch: "Branch",
         status: "Status",
       }}
