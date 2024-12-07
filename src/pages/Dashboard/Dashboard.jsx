@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [runsheetsData, setRunsheetsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   const navigate = useNavigate();
   const [employeeCounts, setEmployeeCounts] = useState({
     active: 0,
@@ -48,49 +49,38 @@ const Dashboard = () => {
       const response = await axiosInstance.get("/admin/runsheet/today");
       const transformedData = response?.data?.data?.map((runsheet) => ({
         id: runsheet.id,
-        status: runsheet.statusId === 1 ? "Active" : "Not Active",
+        status: runsheet.statusId === 1 ? " Open" : "Closed ",
         branchName: runsheet.branch.name,
-        driverName: `${runsheet.driver?.firstName || "Unknown"} ${
+        driverName:`${runsheet.driver?.firstName || "Unknown"} ${
           runsheet.driver?.lastName || "Unknown"
         }`,
         vehicle: runsheet.vehicle?.plateNumber || "Unknown Vehicle",
         startTime: runsheet.vehicle?.startTime
-          ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString(
-              "en-GB"
-            )} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString(
-              "en-US",
-              { hour: "2-digit", minute: "2-digit", hour12: false }
-            )}`
-          : "-", // Fallback for missing startTime
-        finishTime: runsheet.vehicle?.finishTime
-          ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString(
-              "en-GB"
-            )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
-              "en-US",
-              { hour: "2-digit", minute: "2-digit", hour12: false }
-            )}`
-          : `${new Date().toLocaleDateString(
-              "en-GB"
-            )} ${new Date().toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}`, // Current date as fallback for finishTime
-        restTime: runsheet.vehicle?.restTime
-          ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString(
-              "en-GB"
-            )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
-              "en-US",
-              { hour: "2-digit", minute: "2-digit", hour12: false }
-            )}`
-          : `${new Date().toLocaleDateString(
-              "en-GB"
-            )} ${new Date().toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}`,
-      }));
+        ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString(
+            "en-GB"
+          )} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString(
+            "en-US",
+            { hour: "2-digit", minute: "2-digit", hour12: false }
+          )}`
+        : "-", // Fallback for missing startTime
+      finishTime: runsheet.vehicle?.finishTime
+        ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString(
+            "en-GB"
+          )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
+            "en-US",
+            { hour: "2-digit", minute: "2-digit", hour12: false }
+          )}`
+        : "-", // Current date as fallback for finishTime
+      restTime: runsheet.vehicle?.restTime
+        ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString(
+            "en-GB"
+          )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
+            "en-US",
+            { hour: "2-digit", minute: "2-digit", hour12: false }
+          )}`
+        : "-", // Current date as fallback for finishTime
+    }));
+     
 
       setRunsheetsData(transformedData);
       setLoading(false);

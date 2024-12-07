@@ -101,9 +101,10 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
       onAddClick={() => navigate("/add-runsheet")}
       showAddButton={true}
       onSearch={(value) => setSearchTerm(value)}
-      onBranchChange={(value) => setBranch(value)}
+      onBranchChange={(value) => setBranch(value)}    
       onStatusChange={(value) => setStatus(value)}
-      statusOptions={["Reset", "Open", "Closed"]}
+      //statusOptions={["Reset", "Open", "Closed"]}
+      statusOptions={["Reset", "Active","Not Active "]}
       isRunsheetPage={true}
     >
       <TableComponent

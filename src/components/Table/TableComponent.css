@@ -37,6 +37,7 @@
 .custom-table td {
   background-color: #fff;    /* White background for table rows */
   border: 1px solid #ddd;    /* Add  a border for cells  "Border between the information "*/
+  
 }
 
 
@@ -96,3 +97,27 @@ margin: 2px;
   background-color: #e0e0e0;
   cursor: not-allowed;
 }
+
+/* Status container */
+/*
+.status-container {
+  display: flex;
+  align-items:normal;
+  gap: 8px; 
+ 
+}
+
+.status-circle {
+  width: 10px; 
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0; 
+}
+.status-circle.active {
+  background-color: green;
+}
+
+.status-circle.inactive {
+  background-color: red;
+}
+*/

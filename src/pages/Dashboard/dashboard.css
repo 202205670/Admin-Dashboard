@@ -20,6 +20,7 @@
   transition: transform 0.3s ease;
   height: 150px; /* Increased height for better layout */
   display: flex; /* For horizontal alignment */
+  margin-top: -20px;
  
 
   display:inline-table;

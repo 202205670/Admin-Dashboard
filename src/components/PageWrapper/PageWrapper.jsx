@@ -71,7 +71,7 @@ const PageWrapper = ({
               </option>
               
               <option value="Sydney">Sydney</option>
-              <option value="Brisbane">Brisbane</option>
+              <option value="Brisban">Brisban</option>
               <option value="Melbourne">Melbourne</option>
             </select>
           )}
