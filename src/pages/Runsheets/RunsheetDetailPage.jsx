@@ -82,7 +82,7 @@ const RunsheetPage = () => {
     <PageWrapper showAddButton={false}>
       <div className="runsheet-details">
         <div>
-          <h2>Runsheet Details</h2>
+          <h4>Runsheet Details</h4>
         </div>
         <div className="runsheet-info">
           <div className="info-item">
@@ -116,7 +116,8 @@ const RunsheetPage = () => {
                 .split("T")[0]}
           </div>
           <div className="info-item">
-            <strong>Rest Time:</strong> {runSheetDetails?.runsheet?.restTime}
+            <strong>Driver Break:</strong> {runSheetDetails?.runsheet?.breakTime}
+            <span> minutes</span>
           </div>
           <label>
             Status:
@@ -138,8 +139,9 @@ const RunsheetPage = () => {
             {runSheetDetails?.runsheet?.vehicle?.currentKms}
           </div> */}
           <div className="info-item">
-            <strong>Curren KM’s:</strong>{" "}
+            <strong>Current KM’s:</strong>{" "}
             {runSheetDetails?.runsheet?.vehicle?.currentKms}
+      
           </div>
         </div>
 
@@ -161,13 +163,14 @@ const RunsheetPage = () => {
             Driver Safety
           </label>
           <label>
-            <input
-              type="text"
-              value={runSheetDetails?.runsheet?.fuelAdded}
-              readOnly
-            />{" "}
-            Fuel Added
-          </label>
+  <input
+    type="text"
+    value={runSheetDetails?.runsheet?.fuelAdded}
+    readOnly
+  />
+  <span className="fuel-added-label">Fuel Added</span>
+</label>
+
         </div>
 
         <div className="recent-activities">

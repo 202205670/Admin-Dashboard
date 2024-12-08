@@ -46,23 +46,27 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
   if (showRecords) return null;
 
   const filteredVehicles = vehiclesData.filter((vehicle) => {
+    // Check if search term matches the plate number
     const matchesSearch = searchTerm
       ? vehicle.plateNumber
-          .toString()
+          ?.toString()
           .toLowerCase()
           .includes(searchTerm?.toLowerCase())
       : true;
   
+    // Check if selected branch matches vehicle branch
     const matchesBranch = branch
-      ? vehicle.branch?.toLowerCase().includes(branch.toLowerCase())
+      ? vehicle.branch?.toLowerCase() === branch.toLowerCase() // Exact match
       : true;
   
+    // Check if status matches or is reset
     const matchesStatus =
       status === "Reset" || !status ? true : vehicle.status === status;
   
     // Ensure all conditions are included
     return matchesSearch && matchesBranch && matchesStatus;
   });
+  
   
 
   // If showRecords is true, render the vehicle records and UI
@@ -101,3 +105,4 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
 };
 
 export default VehiclePage;
+    
