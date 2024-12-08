@@ -50,7 +50,7 @@ const Dashboard = () => {
       console.log(response.data.data)
       const transformedData = response?.data?.data?.map((runsheet) => ({
         id: runsheet.id,
-        status: runsheet.statusId === 1 ? " Open" : "Closed ",
+        status: runsheet.statusId === 1 ? "Active" : "Not Active ",
         branchName: runsheet.branch.name,
         driverName:`${runsheet.driver?.firstName || "Unknown"} ${
           runsheet.driver?.lastName || "Unknown"

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate and useParams
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm";
-import axiosInstance from '../../server/axios.instance'
-
+import axiosInstance from '../../server/axios.instance';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditVehicle = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const { id } = useParams(); // Get vehicle ID from URL parameters
@@ -85,8 +86,20 @@ const EditVehicle = () => {
       await axiosInstance.put(`/admin/vehicle/${id}`, formData);
       setIsSubmitting(false)
       navigate("/vehicles"); // Redirect to the Driver List page
+      toast.success("Vehicle updated successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      console.error("Error updating Vehicle:", error);
+      if (error.response) {
+        toast.error(
+          error.response.data.message || "Failed to add vehicle. Please try again."
+        );
+      } else if (error.request) {
+        toast.error("No response from server. Please check your connection.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
   };
 

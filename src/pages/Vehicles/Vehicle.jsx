@@ -52,12 +52,18 @@ const VehiclePage = ({ updateVehicleCount, showRecords }) => {
           .toLowerCase()
           .includes(searchTerm?.toLowerCase())
       : true;
-
+  
+    const matchesBranch = branch
+      ? vehicle.branch?.toLowerCase().includes(branch.toLowerCase())
+      : true;
+  
     const matchesStatus =
       status === "Reset" || !status ? true : vehicle.status === status;
-
-    return matchesSearch && matchesStatus;
+  
+    // Ensure all conditions are included
+    return matchesSearch && matchesBranch && matchesStatus;
   });
+  
 
   // If showRecords is true, render the vehicle records and UI
   return (

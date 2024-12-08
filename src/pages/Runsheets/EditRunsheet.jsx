@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm";
 import axiosInstance from '../../server/axios.instance'
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditRunsheetPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -91,8 +92,9 @@ const EditRunsheetPage = () => {
       await axiosInstance.put(`/admin/runsheet/${id}`, formData);
       setIsSubmitting(false)
       navigate("/runsheets"); // Redirect to the Driver List page
+      toast.success("Runsheet edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      console.error("Error updating Runsheet:", error);
     }
   };
 

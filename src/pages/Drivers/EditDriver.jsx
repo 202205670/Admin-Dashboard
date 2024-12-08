@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm"; // Use EditForm
-import axiosInstance from '../../server/axios.instance'
-
+import axiosInstance from '../../server/axios.instance';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditDriver = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const { id } = useParams(); // Get the driver ID from the URL
@@ -93,8 +94,10 @@ const EditDriver = () => {
       await axiosInstance.put(`/admin/drivers/${id}`, formData);
       setIsSubmitting(false)
       navigate("/drivers"); // Redirect to the Driver List page
+      toast.success("Driver edited successfully!"); // Success feedback
     } catch (error) {
       console.error("Error updating driver:", error);
+      
     }
   };
 

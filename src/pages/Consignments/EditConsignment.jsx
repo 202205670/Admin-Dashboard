@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm";
 import axiosInstance from "../../server/axios.instance";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditConsignment = () => {
   const navigate = useNavigate();
@@ -132,8 +134,9 @@ const EditConsignment = () => {
       await axiosInstance.put(`/admin/consignment/${id}`, formData);
       setIsSubmitting(false)
       navigate("/consignments"); // Redirect to the Driver List page
+      toast.success("consignmet edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      console.error("Error updating consignemt:", error);
     }
   };
 

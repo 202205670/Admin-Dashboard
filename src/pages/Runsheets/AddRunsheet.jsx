@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance";
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const AddRunsheet = () => {
   const navigate = useNavigate();
 
@@ -85,6 +86,7 @@ const AddRunsheet = () => {
       console.log("Runsheet created:", response.data);
       setIsSubmitting(false);
       navigate("/runsheets");
+      toast.success("Runsheet added successfully!"); // Success feedback
     } catch (error) {
       console.error("Error creating runsheet:", error);
     }

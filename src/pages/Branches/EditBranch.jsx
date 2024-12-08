@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm";
 import axiosInstance from '../../server/axios.instance'
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditBranch = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const { id } = useParams(); // Get branch ID from URL parameters
@@ -53,14 +54,27 @@ const EditBranch = () => {
     },
   ];
 
-  // Handle form submission
+
   const handleSubmit = async (formData) => {
+    setIsSubmitting(true); // Set submitting state to true
     try {
       await axiosInstance.put(`/admin/branch/${id}`, formData);
-      setIsSubmitting(false)
-      navigate("/branches"); // Redirect to the Driver List page
+  
+      // Redirect to the Branch List page on success
+      navigate("/branches");
+      toast.success("Branch edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      setIsSubmitting(false); // Reset submitting state
+  
+      // Check if the error is due to a duplicate name
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data?.message || "Duplicate branch name detected!";
+        toast.error(errorMessage); // Show error feedback
+      } else {
+        toast.error("An error occurred while updating the branch. Please try again."); // General error
+      }
+  
+      console.error("Error updating Branch:", error);
     }
   };
 

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance"; // Adjust the path to your axios instance
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const AddEmployee = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   
@@ -76,8 +77,9 @@ const AddEmployee = () => {
       const response = await axiosInstance.post("/auth/register", payload); // Adjust endpoint if needed
      setIsSubmitting(false)
         navigate("/employees"); // Redirect to driver list
+        toast.success("Employee added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error creating Employee:", error);
     }
   };
 

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance"; // Replace with your axios setup file if any
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddBranch = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -40,13 +41,25 @@ const AddBranch = () => {
   ];
 
   const handleSubmit = async (formData) => {
+    setIsSubmitting(true); // Set submitting state to true
     try {
       const response = await axiosInstance.post("/admin/branch", formData); // Adjust endpoint if needed
-      setIsSubmitting(false)
-        navigate("/branches"); // Navigate to Branch List page
       
+      // Navigate to the Branch List page on success
+      navigate("/branches");
+      toast.success("Branch added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error submitting form:", error);
+      setIsSubmitting(false); // Reset submitting state
+  
+      // Check if the error is due to a duplicate name
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data?.message || "Duplicate branch name detected!";
+        toast.error(errorMessage); // Show error feedback
+      } else {
+        toast.error("An error occurred while adding the branch. Please try again."); // General error
+      }
+  
+      console.error("Error creating Branch", error);
     }
   };
 

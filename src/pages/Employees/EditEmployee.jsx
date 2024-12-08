@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import EditForm from "../../components/EditForm/EditForm"; // Import EditForm
 import axiosInstance from '../../server/axios.instance'
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const EditEmployee = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const { id } = useParams(); // Get the driver ID from the URL
@@ -94,8 +95,9 @@ const EditEmployee = () => {
       await axiosInstance.put(`/admin/employee/${id}`, formData);
       setIsSubmitting(false)
       navigate("/employees"); // Redirect to the Driver List page
+      toast.success("Employee edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      console.error("Error updating Employee:", error);
     }
   };
 

@@ -4,8 +4,7 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance"; // Adjust the path to your axios instance
 import { toast } from "react-toastify";
-
-
+import 'react-toastify/dist/ReactToastify.css';
 const AddDriver = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [branchOptions, setBranchOptions] = useState([]);
@@ -77,6 +76,7 @@ const AddDriver = () => {
       };
       const response = await axiosInstance.post("/auth/register", payload); // Adjust endpoint if needed
         navigate("/drivers"); // Redirect to driver list
+        toast.success("Driver added successfully!"); // Success feedback
     } catch (error) {
       console.error("Error submitting form:", error);
   

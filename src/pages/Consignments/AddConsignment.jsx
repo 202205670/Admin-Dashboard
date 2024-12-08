@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance";
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const AddConsignment = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [customerOptions, setCustomerOptions] = useState([]);
@@ -108,6 +109,7 @@ const AddConsignment = () => {
       console.log("Consignment created:", response.data);
       setIsSubmitting(false);
       navigate("/consignments");
+      toast.success("consignment added successfully!"); // Success feedback
     } catch (error) {
       console.error("Error creating consignment:", error);
     }
