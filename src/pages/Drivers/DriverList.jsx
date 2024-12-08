@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +5,6 @@ import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import TableComponent from "../../components/Table/TableComponent"; // Ensure this is correctly imported
 import useStatusCount from "../../hooks/useStatusCount"; // Ensure the hook is correctly imported
 import axiosInstance from "../../server/axios.instance";
-import Spinner from "../../components/Spinner/Spinner";
 
 const DriversPage = ({ updateDriverCount, showRecords }) => {
   const navigate = useNavigate();
@@ -50,13 +48,17 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
 
   const filteredDrivers = driversData.filter((driver) => {
     const matchesSearch = searchTerm
-      ? driver.firstName.toLowerCase().includes(searchTerm)
+      ? driver.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+
+    const matchesBranch = branch
+      ? driver.branch.toLowerCase().includes(branch.toLowerCase())
       : true;
 
     const matchesStatus =
       status === "Reset" || !status ? true : driver.status === status;
 
-    return matchesSearch && matchesStatus;
+    return matchesSearch && matchesBranch && matchesStatus;
   });
 
   // If showRecords is true, render the driver records and UI
@@ -79,8 +81,6 @@ const DriversPage = ({ updateDriverCount, showRecords }) => {
     >
       <TableComponent
         columns={[
-          // "id",
-          // "userId",
           "email",
           "firstName",
           "lastName",

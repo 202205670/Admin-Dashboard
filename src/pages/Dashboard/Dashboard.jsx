@@ -47,6 +47,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get("/admin/runsheet/today");
+      console.log(response.data.data)
       const transformedData = response?.data?.data?.map((runsheet) => ({
         id: runsheet.id,
         status: runsheet.statusId === 1 ? " Open" : "Closed ",

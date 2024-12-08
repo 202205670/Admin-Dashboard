@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import AddForm from "../../components/AddForm/AddForm";
 import axiosInstance from "../../server/axios.instance";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AddVehicle = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [branchOptions, setBranchOptions] = useState([]);
   const [vehicleTypeOptions, setVehicleTypeOptions] = useState([]);
-  const [isSubmitting,setIsSubmitting] = useState(false)
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -64,10 +66,23 @@ const AddVehicle = () => {
   const handleSubmit = async (formData) => {
     try {
       await axiosInstance.post("/admin/vehicle", formData);
-setIsSubmitting(false)
+      setIsSubmitting(false);
       navigate("/vehicles");
+      toast.success("Vehicle added successfully!"); // Success feedback
     } catch (error) {
       console.error("Error submitting form:", error);
+  
+      if (error.response) {
+        toast.error(
+          error.response.data.message || "Failed to add vehicle. Please try again."
+        );
+      } else if (error.request) {
+        toast.error("No response from server. Please check your connection.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
   };
 
