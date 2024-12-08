@@ -42,6 +42,19 @@ const TableComponent = ({
   const getColumnKey = (column) =>
     typeof column === "string" ? column : column.key;
 
+  // Helper to render status with CSS classes
+  const renderStatus = (status) => {
+    const statusClass = status === "Active" ? "active" : "inactive";
+    return (
+      <div style={{ display:"flex",gap:"5px" }}>
+        <div style={{width:"30%",display:"flex",alignItems:"center",justifyContent:"center" }}>
+          <div className={`status-circle ${statusClass}`}></div>
+        </div>
+        <div style={{width:"70%"}}>{status}</div>
+      </div>
+    );
+  };
+
   return (
     <div className="table-container">
       {loading ? (
@@ -78,11 +91,18 @@ const TableComponent = ({
                       {row[getColumnKey(columns[0])] || "-"}{" "}
                       {/* Default value if undefined */}
                     </td>
-                    {columns.slice(1).map((column, colIndex) => (
-                      <td key={colIndex + 1}>
-                        {row[getColumnKey(column)] || "-"}
-                      </td> // Default value if undefined
-                    ))}
+                    {columns.slice(1).map((column, colIndex) => {
+                      const columnKey = getColumnKey(column);
+                      const cellData = row[columnKey] || "-";
+
+                      return (
+                        <td key={colIndex + 1}>
+                          {columnKey === "status"
+                            ? renderStatus(cellData) // Render status with styling
+                            : cellData}
+                        </td>
+                      );
+                    })}
                     <td>
                       <button
                         onClick={(e) => {

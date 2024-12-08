@@ -79,9 +79,9 @@ const RunsheetPage = ({ updateRunsheetCount, showRecords }) => {
 
   const filteredRunsheets = runsheetsData.filter((runsheet) => {
     const matchesSearch = searchTerm
-      ? runsheet.id.toString().includes(searchTerm)
+      ? runsheet?.id.toString().toLowerCase().includes(searchTerm?.toLowerCase())
       : true;
-
+    
     const matchesStatus =
       status === "Reset" || !status ? true : runsheet.status === status;
 

@@ -31,6 +31,7 @@ import EditBranch from "./pages/Branches/EditBranch";
 import Vehicles from "./pages/Vehicles/Vehicle";
 import AddVehicle from "./pages/Vehicles/AddVehicle";
 import EditVehicle from "./pages/Vehicles/EditVehicle";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +81,7 @@ function App() {
           <Route path="/add-vehicle" element={<AddVehicle />} />
           <Route path="/edit-vehicle/:id" element={<EditVehicle />} />
         </Routes>
+        <ToastContainer />
       </Layout>
     </Router>
   );

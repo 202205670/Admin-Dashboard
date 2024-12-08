@@ -53,7 +53,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
             : "-",
           priority: consignment.priority,
           status: consignment.statusId === 1 ? "Active" : "Not Active",
-          type: consignment.typeId === 1 ? "Pick-Up" : "Delivery",
+          type: consignment.typeId === 1 ? "Delivery" : "Pick-Up",
         })
       );
       setConsignmentsData(transformedData);
