@@ -3,6 +3,8 @@ import './EditForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../Spinner/Spinner';
+import Select from 'react-select'
+
 
 const EditForm = ({
   title,
@@ -20,7 +22,10 @@ const EditForm = ({
   isEditRunsheetPage,
   initialValues = {},
   isSubmitting,
-  setIsSubmitting
+  setIsSubmitting,
+  availableConsignment,
+  handleConsignmentChange,
+  selectedConsignments
 }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
@@ -136,6 +141,20 @@ const EditForm = ({
               </div>
             )
           )}
+          {isEditRunsheetPage && (
+            <div>
+              <label style={{marginBottom:"3px"}} htmlFor="active" className="checkbox-label">
+             Assign Consignment
+           </label>
+           <Select 
+        isMulti 
+        options={availableConsignment} 
+        onChange={handleConsignmentChange} // Call the handler on change
+        value={availableConsignment.filter(option => selectedConsignments.includes(option.value))} // Maintain the state for controlled behavior
+      />
+            </div>
+           
+          )}
         </div>
 
         {secondTitle && (
@@ -176,13 +195,6 @@ const EditForm = ({
           </>
         )}
 
-        {isEditRunsheetPage && (
-          <div className="form-group">
-            <button type="button" className="form-btn assign-btn" onClick={handleAssign}>
-              Assign
-            </button>
-          </div>
-        )}
 
         {showStatusCheckbox && (
           <div className="status-container">
