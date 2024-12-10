@@ -5,6 +5,8 @@ import EditForm from "../../components/EditForm/EditForm";
 import axiosInstance from '../../server/axios.instance'
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+
+
 const EditRunsheetPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -14,10 +16,27 @@ const EditRunsheetPage = () => {
   const [vehicleOptions, setVehicleOptions] = useState([]);
   const [runsheetData, setRunsheetData] = useState(null);
   const [isSubmitting,setIsSubmitting] = useState(false)
+  const [availableConsignment,setAvailableConsignment] = useState([])
+  const [selectedConsignments, setSelectedConsignments] = useState([]);
 
 
     // Fetch options for Driver, Vehicle, and Branch from the backend
     useEffect(() => {
+      const fetchAvailableConsignment = async () => {
+        try {
+          const response = await axiosInstance.get(`/admin/consignment/available`);
+          setAvailableConsignment(
+            response?.data?.consignments.map((consignment) => ({
+              value: consignment.id, 
+              label: consignment.consignmentNo,
+            }))
+          );
+          console.log(availableConsignment)
+        } catch (error) {
+          console.error("Error fetching consignment data:", error);
+        }
+        
+      };
       const fetchRunsheetData = async () => {
         try {
           const response = await axiosInstance.get(
@@ -67,6 +86,7 @@ const EditRunsheetPage = () => {
       };
       fetchRunsheetData()
       fetchOptions();
+      fetchAvailableConsignment()
     }, []);
 
 
@@ -83,13 +103,21 @@ const EditRunsheetPage = () => {
     },
   ];
 
+  const handleConsignmentChange = (selectedOptions) => {
+    const values = selectedOptions ? selectedOptions.map(option => option.value) : [];
+    setSelectedConsignments(values); // Update the state with selected values
+    console.log("Selected Consignments:", values); // Log for debugging
+  };
 
   // Handle form submission
   const handleFormSubmit = async (formData) => {
     console.log(formData)
-
+    const data = {
+      ...formData,
+      consignments: selectedConsignments
+    }
     try {
-      await axiosInstance.put(`/admin/runsheet/${id}`, formData);
+      await axiosInstance.put(`/admin/runsheet/${id}`, data);
       setIsSubmitting(false)
       navigate("/runsheets"); // Redirect to the Driver List page
       toast.success("Runsheet edited successfully!"); // Success feedback
@@ -115,6 +143,10 @@ const EditRunsheetPage = () => {
       onCancel={handleFormCancel}
       setIsSubmitting={setIsSubmitting}
       isSubmitting={isSubmitting}
+      availableConsignment={availableConsignment}
+      isEditRunsheetPage={true}
+      handleConsignmentChange={handleConsignmentChange}
+      selectedConsignments={selectedConsignments}
     />}
     </PageWrapper>
   );

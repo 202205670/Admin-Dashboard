@@ -179,7 +179,6 @@ const RunsheetPage = () => {
               // "id",
               "consignmentNo",
               "customer",
-              "runsheet",
               "source",
               "destination",
               "timeIn",

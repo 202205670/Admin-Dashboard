@@ -56,30 +56,21 @@ const Dashboard = () => {
           runsheet.driver?.lastName || "Unknown"
         }`,
         vehicle: runsheet.vehicle?.plateNumber || "Unknown Vehicle",
-        startTime: runsheet.vehicle?.startTime
-        ? `${new Date(runsheet.vehicle.startTime).toLocaleDateString(
-            "en-GB"
-          )} ${new Date(runsheet.vehicle.startTime).toLocaleTimeString(
-            "en-US",
-            { hour: "2-digit", minute: "2-digit", hour12: false }
-          )}`
-        : "-", // Fallback for missing startTime
-      finishTime: runsheet.vehicle?.finishTime
-        ? `${new Date(runsheet.vehicle.finishTime).toLocaleDateString(
-            "en-GB"
-          )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
-            "en-US",
-            { hour: "2-digit", minute: "2-digit", hour12: false }
-          )}`
-        : "-", // Current date as fallback for finishTime
-      restTime: runsheet.vehicle?.restTime
-        ? `${new Date(runsheet.vehicle.restTime).toLocaleDateString(
-            "en-GB"
-          )} ${new Date(runsheet.vehicle.finishTime).toLocaleTimeString(
-            "en-US",
-            { hour: "2-digit", minute: "2-digit", hour12: false }
-          )}`
-        : "-", // Current date as fallback for finishTime
+        startTime: runsheet?.startTime ?
+        new Date(runsheet?.startTime)
+          .toISOString()
+          .split("T")[0]
+          : "-", // Fallback for missing startTime
+        finishTime: runsheet?.finishTime ?
+        new Date(runsheet?.finishTime)
+          .toISOString()
+          .split("T")[0]
+          : "-", // Current date as fallback for finishTime
+          breakTime: runsheet?.breakTime 
+          ? Number(runsheet.breakTime) > 1 
+            ? `${runsheet.breakTime} mins` 
+            : `${runsheet.breakTime} min` 
+          : '-', // Current date as fallback for finishTime
     }));
      
 
@@ -283,7 +274,7 @@ const Dashboard = () => {
           "vehicle",
           "startTime",
           "finishTime",
-          "restTime",
+          "breakTime",
           "status",
         ]}
         data={runsheetsData}

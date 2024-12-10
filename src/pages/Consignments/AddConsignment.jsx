@@ -94,7 +94,6 @@ const AddConsignment = () => {
       ],
     },
     { label: "Description", type: "textarea", name: "description" },
-    { label: "Priority", type: "number", name: "priority" },
     {
       label: "Status",
       type: "checkbox",

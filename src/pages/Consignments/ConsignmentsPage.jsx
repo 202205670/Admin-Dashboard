@@ -30,7 +30,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
           id: consignment?.id,
           consignmentNo: consignment.consignmentNo,
           customer: consignment.customer.name,
-          runsheet: consignment.runsheet.id,
+          runsheet: consignment?.runsheet?.id ?? "-",
           source: consignment.source.city,
           destination: consignment.destination.city,
           timeIn: consignment.timeIn
@@ -51,7 +51,7 @@ const ConsignmentsPage = ({ updateConsignmentCount, showRecords }) => {
                 hour12: false,
               })}`
             : "-",
-          priority: consignment.priority,
+          priority: consignment?.priority ??  "-",
           status: consignment.statusId === 1 ? "Active" : "Not Active",
           type: consignment.typeId === 1 ? "Delivery" : "Pick-Up",
         })
