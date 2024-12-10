@@ -67,12 +67,6 @@ const AddConsignment = () => {
       options: customerOptions,
     },
     {
-      label: "Runsheet",
-      type: "select",
-      name: "runsheetId",
-      options: runsheetOptions,
-    },
-    {
       label: "Source",
       type: "select",
       name: "sourceId",
