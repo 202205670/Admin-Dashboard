@@ -59,7 +59,7 @@ const AddBranch = () => {
         toast.error("An error occurred while adding the branch. Please try again."); // General error
       }
   
-      console.error("Error creating Branch", error);
+      toast.error("Error creating Branch", error);
     }
   };
 

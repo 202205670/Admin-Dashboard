@@ -105,6 +105,17 @@ const AddConsignment = () => {
       toast.success("consignment added successfully!"); // Success feedback
     } catch (error) {
       console.error("Error creating consignment:", error);
+      if (error.response) {
+        toast.error(
+          error.response.data.message || "Failed to add vehicle. Please try again."
+        );
+      } else if (error.request) {
+        toast.error("No response from server. Please check your connection.");
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
   };
 

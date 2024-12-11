@@ -136,7 +136,7 @@ const EditConsignment = () => {
       navigate("/consignments"); // Redirect to the Driver List page
       toast.success("consignmet edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating consignemt:", error);
+      toast.error("Error updating consignemt:", error);
     }
   };
 

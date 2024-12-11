@@ -88,7 +88,7 @@ const EditVehicle = () => {
       navigate("/vehicles"); // Redirect to the Driver List page
       toast.success("Vehicle updated successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating Vehicle:", error);
+      toast.error("Error updating Vehicle:", error);
       if (error.response) {
         toast.error(
           error.response.data.message || "Failed to add vehicle. Please try again."

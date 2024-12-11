@@ -70,7 +70,7 @@ const AddVehicle = () => {
       navigate("/vehicles");
       toast.success("Vehicle added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error adding form:", error);
+      toast.error("Error creating vehicle:", error);
   
       if (error.response) {
         toast.error(

@@ -96,7 +96,7 @@ const EditDriver = () => {
       navigate("/drivers"); // Redirect to the Driver List page
       toast.success("Driver edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating driver:", error);
+      toast.error("Error updating driver:", error);
       
     }
   };

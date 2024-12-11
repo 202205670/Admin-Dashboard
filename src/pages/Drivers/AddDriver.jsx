@@ -78,7 +78,7 @@ const AddDriver = () => {
         navigate("/drivers"); // Redirect to driver list
         toast.success("Driver added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error submitting form:", error);
+      toast.error("Error creating Driver", error);
   
       if (error.response) {
         toast.error(

@@ -88,7 +88,7 @@ const AddRunsheet = () => {
       navigate("/runsheets");
       toast.success("Runsheet added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error creating runsheet:", error);
+      toast.error("Error creating runsheet:", error);
     }
   };
 
@@ -102,6 +102,7 @@ const AddRunsheet = () => {
         onCancel={() => navigate("/runsheets")}
         setIsSubmitting={setIsSubmitting}
         isSubmitting={isSubmitting}
+        statusLabel="Active" 
         // showTable={true}
         // isAddRunsheetPage={true}
       />

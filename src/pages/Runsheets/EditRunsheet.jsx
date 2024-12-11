@@ -122,7 +122,7 @@ const EditRunsheetPage = () => {
       navigate("/runsheets"); // Redirect to the Driver List page
       toast.success("Runsheet edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating Runsheet:", error);
+      toast.error("Error updating Runsheet:", error);
     }
   };
 
@@ -147,6 +147,7 @@ const EditRunsheetPage = () => {
       isEditRunsheetPage={true}
       handleConsignmentChange={handleConsignmentChange}
       selectedConsignments={selectedConsignments}
+      statusLabel="Active" 
     />}
     </PageWrapper>
   );

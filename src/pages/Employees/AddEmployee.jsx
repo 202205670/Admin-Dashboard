@@ -79,7 +79,7 @@ const AddEmployee = () => {
         navigate("/employees"); // Redirect to driver list
         toast.success("Employee added successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error creating Employee:", error);
+      toast.error("Error creating Employee:", error);
     }
   };
 

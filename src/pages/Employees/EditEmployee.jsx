@@ -97,7 +97,7 @@ const EditEmployee = () => {
       navigate("/employees"); // Redirect to the Driver List page
       toast.success("Employee edited successfully!"); // Success feedback
     } catch (error) {
-      console.error("Error updating Employee:", error);
+      toast.error("Error updating Employee:", error);
     }
   };
 

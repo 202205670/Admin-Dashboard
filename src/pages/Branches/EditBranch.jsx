@@ -74,7 +74,7 @@ const EditBranch = () => {
         toast.error("An error occurred while updating the branch. Please try again."); // General error
       }
   
-      console.error("Error updating Branch:", error);
+      toast.error("Error updating Branch:", error);
     }
   };
 
