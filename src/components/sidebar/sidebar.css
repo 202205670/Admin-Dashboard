@@ -118,7 +118,7 @@ background: #EBEEEE;
 }
 
 .profileEmail {
-  font-size: 14px;         /* Smaller font size for email */
+  font-size: 11.5px;         /* Smaller font size for email */
   color: #888;             /* Light grey color for email text */
   margin-left: 15px;               /* Remove default margins */
 }

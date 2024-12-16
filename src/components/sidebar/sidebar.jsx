@@ -22,15 +22,16 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
-        <div className="profileSection">
-          <div className="profileIcon">
-            <Person />
-          </div>
-          <div className="profileInfo">
-            <h3 className="profileName">Younes</h3>
-            <span className="profileEmail">Younes@gtls.com.au</span>
-          </div>
-        </div>
+            <div className="profileSection">
+              <div className="profileIcon">
+               
+                <Person />
+              </div>
+              <div className="profileInfo">
+                <h3 className="profileName">Nour Toutounji</h3>
+                <span className="profileEmail">nourtoutounji518@gmail.com</span>
+              </div>
+            </div>
         <div className="profileDivider"></div> {/* Divider line after profile info */}
         
         <div className="sidebarMenu">
